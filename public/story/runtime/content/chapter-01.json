@@ -1,0 +1,264 @@
+[
+  {
+    "id": "content-scene-report",
+    "chapterId": "chapter-01",
+    "type": "document",
+    "title": "听雪房现场初检记录",
+    "source": "静园临时调查组",
+    "summary": "记录尸体、茶桌、门锁与室内物品的初步状态。",
+    "unlockCondition": {
+      "type": "always"
+    },
+    "observationIds": [],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "content-scene-report"
+      },
+      {
+        "type": "unlockContent",
+        "contentId": "content-toxicology-summary"
+      },
+      {
+        "type": "unlockContent",
+        "contentId": "content-argument-chat"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "记录时间": "22:18",
+        "地点": "静园·听雪房"
+      },
+      "paragraphs": [
+        {
+          "id": "scene-01",
+          "text": "沈慈云被发现倒在听雪房茶桌旁，室内没有明显搏斗痕迹。"
+        },
+        {
+          "id": "scene-02",
+          "text": "桌面留有一杯已经冷却的白山茶，杯柄朝向死者右手。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "content-teacup-photo",
+    "chapterId": "chapter-01",
+    "type": "image",
+    "title": "白山茶杯现场照片",
+    "source": "现场摄影",
+    "summary": "茶杯、杯碟与死者右手的近距离照片。",
+    "unlockCondition": {
+      "type": "always"
+    },
+    "observationIds": ["observation-yishu-fingerprint"],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "content-teacup-photo"
+      }
+    ],
+    "image": {
+      "asset": "/story/runtime/assets/chapter-01/teacup-scene.png",
+      "alt": "听雪房茶桌上的白瓷茶杯",
+      "display": {
+        "aspectRatio": "16:9",
+        "fit": "cover",
+        "focalPoint": {
+          "x": 64,
+          "y": 54
+        }
+      },
+      "hotspots": [
+        {
+          "id": "hotspot-cup-handle",
+          "label": "检查杯柄",
+          "x": 67,
+          "y": 52,
+          "observationId": "observation-yishu-fingerprint"
+        }
+      ]
+    }
+  },
+  {
+    "id": "content-toxicology-summary",
+    "chapterId": "chapter-01",
+    "type": "document",
+    "title": "初步毒检摘要",
+    "source": "温如素医疗室",
+    "summary": "对白山茶样本进行的第一轮快速检测。",
+    "unlockCondition": {
+      "type": "contentViewed",
+      "contentId": "content-scene-report"
+    },
+    "observationIds": ["observation-aconite-in-tea"],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "content-toxicology-summary"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "样本": "听雪房茶杯残液",
+        "状态": "初步结果"
+      },
+      "paragraphs": [
+        {
+          "id": "toxicology-01",
+          "text": "茶液样本检出乌头类生物碱反应。",
+          "observationId": "observation-aconite-in-tea"
+        },
+        {
+          "id": "toxicology-02",
+          "text": "定量分析尚未完成，暂不能判断其与死亡的因果关系。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "content-transfer-order",
+    "chapterId": "chapter-01",
+    "type": "document",
+    "title": "临时医疗转移通知",
+    "source": "何清和法律资料室",
+    "summary": "沈意舒将在当晚23:00被转移至白山医疗住所。",
+    "unlockCondition": {
+      "type": "always"
+    },
+    "observationIds": ["observation-transfer-at-2300"],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "content-transfer-order"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "执行时间": "23:00",
+        "对象": "沈意舒"
+      },
+      "paragraphs": [
+        {
+          "id": "transfer-01",
+          "text": "鉴于紧急医疗授权仍然有效，沈意舒将接受为期七十二小时的保护性观察。",
+          "observationId": "observation-transfer-at-2300"
+        }
+      ]
+    }
+  },
+  {
+    "id": "content-sisters-chat",
+    "chapterId": "chapter-01",
+    "type": "chat",
+    "title": "姐妹聊天：离开静园",
+    "source": "沈意舒手机备份",
+    "summary": "案发前四天，沈仪真试图安排沈意舒离开。",
+    "unlockCondition": {
+      "type": "dialogueCompleted",
+      "dialogueId": "dialogue-yishu-transfer"
+    },
+    "observationIds": ["observation-yishu-refused-leaving"],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "content-sisters-chat"
+      }
+    ],
+    "chat": {
+      "participantIds": ["shen-yizhen", "shen-yishu"],
+      "participantNames": {
+        "shen-yizhen": "沈仪真",
+        "shen-yishu": "沈意舒"
+      },
+      "messages": [
+        {
+          "id": "sisters-01",
+          "senderId": "shen-yizhen",
+          "time": "23:14",
+          "text": "车和住处都准备好了。你今晚跟我走。"
+        },
+        {
+          "id": "sisters-02",
+          "senderId": "shen-yishu",
+          "time": "23:17",
+          "text": "我不要姐姐替我决定去哪。我只要她亲口告诉我，我是谁。",
+          "observationId": "observation-yishu-refused-leaving"
+        }
+      ]
+    }
+  },
+  {
+    "id": "content-argument-chat",
+    "chapterId": "chapter-01",
+    "type": "chat",
+    "title": "家宴侧廊录音转写",
+    "source": "静园室内终端",
+    "summary": "沈意舒与沈慈云在家宴前的短暂争执。",
+    "unlockCondition": {
+      "type": "contentViewed",
+      "contentId": "content-scene-report"
+    },
+    "observationIds": ["observation-mother-daughter-conflict"],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "content-argument-chat"
+      }
+    ],
+    "chat": {
+      "participantIds": ["shen-ciyun", "shen-yishu"],
+      "participantNames": {
+        "shen-ciyun": "沈慈云",
+        "shen-yishu": "沈意舒"
+      },
+      "messages": [
+        {
+          "id": "argument-01",
+          "senderId": "shen-ciyun",
+          "time": "19:52",
+          "text": "今晚之后，你会有足够的时间冷静。"
+        },
+        {
+          "id": "argument-02",
+          "senderId": "shen-yishu",
+          "time": "19:53",
+          "text": "你想让我消失，和十二年前一样。",
+          "observationId": "observation-mother-daughter-conflict"
+        }
+      ]
+    }
+  },
+  {
+    "id": "content-toxicology-appendix",
+    "chapterId": "chapter-01",
+    "type": "document",
+    "title": "毒检定量附件",
+    "source": "温如素医疗室",
+    "summary": "第一轮定量分析结果，为毒茶假说留下一个无法忽略的缺口。",
+    "unlockCondition": {
+      "type": "reasoningCompleted",
+      "reasoningId": "reasoning-first-hypothesis"
+    },
+    "observationIds": ["observation-insufficient-dose"],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "content-toxicology-appendix"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "样本": "听雪房茶杯残液",
+        "状态": "定量附件"
+      },
+      "paragraphs": [
+        {
+          "id": "appendix-01",
+          "text": "根据残液浓度与死者胃内容物估算，茶中毒物不足以单独造成当前死亡结果。",
+          "observationId": "observation-insufficient-dose"
+        }
+      ]
+    }
+  }
+]

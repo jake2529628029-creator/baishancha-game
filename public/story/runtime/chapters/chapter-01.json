@@ -1,0 +1,326 @@
+{
+  "id": "chapter-01",
+  "order": 1,
+  "title": "茶杯上的指纹",
+  "summary": "暴雪切断了静园与外界的联系。沈慈云被发现死在听雪房，一杯白山茶成为所有人最先注意到的线索。",
+  "scenes": [
+    {
+      "id": "scene-listening-snow",
+      "name": "听雪房",
+      "eyebrow": "案发现场",
+      "description": "沈慈云倒下的玻璃暖房。风雪正在掩去屋外的一切痕迹。",
+      "contentIds": [
+        "content-scene-report",
+        "content-teacup-photo",
+        "content-toxicology-summary",
+        "content-toxicology-appendix"
+      ]
+    },
+    {
+      "id": "scene-side-corridor",
+      "name": "东侧廊",
+      "eyebrow": "通讯与文书",
+      "description": "通往医疗室与家宴厅的侧廊，沈家内部终端的备份集中在这里。",
+      "contentIds": [
+        "content-transfer-order",
+        "content-argument-chat",
+        "content-sisters-chat"
+      ]
+    }
+  ],
+  "journalEntries": [
+    {
+      "id": "journal-fact-scene",
+      "category": "fact",
+      "title": "现场没有搏斗痕迹",
+      "text": "沈慈云倒在茶桌旁，听雪房内没有明显搏斗或强行闯入痕迹。",
+      "revealCondition": {
+        "type": "contentViewed",
+        "contentId": "content-scene-report"
+      }
+    },
+    {
+      "id": "journal-fact-fingerprint",
+      "category": "fact",
+      "title": "沈意舒接触过茶杯",
+      "text": "杯柄上的完整指纹可以确认接触行为，但不能直接证明投毒。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-yishu-fingerprint"
+      }
+    },
+    {
+      "id": "journal-fact-aconite",
+      "category": "fact",
+      "title": "茶液含有乌头成分",
+      "text": "快速检测确认乌头类生物碱存在，定量结论在第一轮调查中仍然缺失。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-aconite-in-tea"
+      }
+    },
+    {
+      "id": "journal-fact-pressure",
+      "category": "fact",
+      "title": "23:00将执行医疗转移",
+      "text": "沈意舒面临当晚被强制转移的即时压力，并在家宴前与沈慈云发生冲突。",
+      "revealCondition": {
+        "type": "all",
+        "conditions": [
+          {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-transfer-order"
+          },
+          {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-mother-daughter-conflict"
+          }
+        ]
+      }
+    },
+    {
+      "id": "journal-fact-dose",
+      "category": "fact",
+      "title": "毒物剂量不足以单独致死",
+      "text": "茶液和胃内容物中的毒量无法独立解释沈慈云的死亡结果。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-insufficient-dose"
+      }
+    },
+    {
+      "id": "journal-hypothesis-contact",
+      "category": "hypothesis",
+      "title": "指纹只建立接触机会",
+      "text": "沈意舒送过茶，但“接触杯子”与“向杯中投毒”之间仍缺少行为证据。",
+      "revealCondition": {
+        "type": "reasoningCompleted",
+        "reasoningId": "reasoning-fingerprint"
+      }
+    },
+    {
+      "id": "journal-hypothesis-motive",
+      "category": "hypothesis",
+      "title": "沈意舒具有现实压力",
+      "text": "医疗转移和母女冲突能构成动机方向，但动机不能替代致死行为证明。",
+      "revealCondition": {
+        "type": "reasoningCompleted",
+        "reasoningId": "reasoning-motive"
+      }
+    },
+    {
+      "id": "journal-hypothesis-poison",
+      "category": "hypothesis",
+      "title": "毒茶可能是致死手段",
+      "text": "指纹、毒物、压力与冲突组成一条暂时闭合的调查路线。",
+      "revealCondition": {
+        "type": "reasoningCompleted",
+        "reasoningId": "reasoning-first-hypothesis"
+      },
+      "retireCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-insufficient-dose"
+      }
+    },
+    {
+      "id": "journal-hypothesis-revised",
+      "category": "hypothesis",
+      "title": "毒茶是部分手段或误导",
+      "text": "剂量矛盾迫使调查重新区分“杯中有毒”与“毒茶导致死亡”这两个命题。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-insufficient-dose"
+      }
+    },
+    {
+      "id": "journal-question-poisoner",
+      "category": "question",
+      "title": "谁把乌头放进茶里？",
+      "text": "现有检测只能证明毒物存在，尚未建立投放者与投放时间。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-aconite-in-tea"
+      }
+    },
+    {
+      "id": "journal-question-gap",
+      "category": "question",
+      "title": "证据之间缺失了哪一步？",
+      "text": "从沈意舒接触茶杯到沈慈云死亡，中间仍缺少直接的行为与因果链。",
+      "revealCondition": {
+        "type": "reasoningCompleted",
+        "reasoningId": "reasoning-first-hypothesis"
+      }
+    },
+    {
+      "id": "journal-question-cause",
+      "category": "question",
+      "title": "真正的致死原因是什么？",
+      "text": "如果茶中剂量不足，沈慈云的死亡还依赖另一种手段或身体条件。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-insufficient-dose"
+      }
+    }
+  ],
+  "result": {
+    "eyebrow": "第一章调查结论",
+    "title": "一个过早闭合的答案",
+    "summary": "沈意舒拥有接触茶杯的机会，也正承受被转移的现实压力。毒茶假说因此成立为合理方向，却还不是可以指控任何人的答案。",
+    "confirmedFacts": [
+      "沈意舒亲手送出并接触过白山茶杯",
+      "茶液中确实存在乌头类生物碱",
+      "23:00的医疗转移使沈意舒面临即时压力"
+    ],
+    "unresolvedQuestions": [
+      "茶中毒物为何不足以单独造成沈慈云死亡？",
+      "如果茶不是完整的致死手段，指纹与毒物之间缺失了哪一步？"
+    ],
+    "closingLine": "最方便的嫌疑人，往往只是在替真正的问题挡住视线。",
+    "evaluationTiers": [
+      {
+        "minimumScore": 96,
+        "title": "冷静的证据主义者",
+        "description": "你能容忍暂时没有答案，并持续区分事实、推测与因果。这正是静园最需要的调查者。"
+      },
+      {
+        "minimumScore": 80,
+        "title": "敏锐的案情拆解者",
+        "description": "你找到了主要矛盾，也完成了关键论证。少数过早尝试没有遮住最终的证据缺口。"
+      },
+      {
+        "minimumScore": 60,
+        "title": "大胆的假说构建者",
+        "description": "你擅长迅速建立方向，但有时让人物嫌疑跑在证据前面。下一章需要更谨慎地验证因果。"
+      },
+      {
+        "minimumScore": 0,
+        "title": "执着的静园访客",
+        "description": "你完成了调查，但仍容易被最显眼的嫌疑牵引。日志中的未解决疑点值得再次复盘。"
+      }
+    ]
+  },
+  "objectives": [
+    {
+      "id": "inspect-scene",
+      "text": "确认听雪房现场的基本情况",
+      "completionCondition": {
+        "type": "contentViewed",
+        "contentId": "content-scene-report"
+      }
+    },
+    {
+      "id": "review-teacup",
+      "text": "检查白山茶杯与初步毒检",
+      "completionCondition": {
+        "type": "all",
+        "conditions": [
+          {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-yishu-fingerprint"
+          },
+          {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-aconite-in-tea"
+          }
+        ]
+      }
+    },
+    {
+      "id": "question-yishu",
+      "text": "就茶杯与医疗转移询问沈意舒",
+      "completionCondition": {
+        "type": "all",
+        "conditions": [
+          {
+            "type": "dialogueCompleted",
+            "dialogueId": "dialogue-yishu-tea"
+          },
+          {
+            "type": "dialogueCompleted",
+            "dialogueId": "dialogue-yishu-transfer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "form-first-hypothesis",
+      "text": "提交第一份案件假设",
+      "completionCondition": {
+        "type": "reasoningCompleted",
+        "reasoningId": "reasoning-first-hypothesis"
+      }
+    },
+    {
+      "id": "find-contradiction",
+      "text": "确认毒茶理论尚未解释的矛盾",
+      "completionCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-insufficient-dose"
+      }
+    }
+  ],
+  "entryCondition": {
+    "type": "always"
+  },
+  "completionCondition": {
+    "type": "all",
+    "conditions": [
+      {
+        "type": "reasoningCompleted",
+        "reasoningId": "reasoning-first-hypothesis"
+      },
+      {
+        "type": "dialogueCompleted",
+        "dialogueId": "dialogue-yishu-tea"
+      },
+      {
+        "type": "dialogueCompleted",
+        "dialogueId": "dialogue-yishu-transfer"
+      },
+      {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-insufficient-dose"
+      }
+    ]
+  },
+  "initialEvents": [
+    {
+      "type": "setChapterStage",
+      "stage": "investigating"
+    },
+    {
+      "type": "unlockContent",
+      "contentId": "content-scene-report"
+    },
+    {
+      "type": "unlockContent",
+      "contentId": "content-teacup-photo"
+    },
+    {
+      "type": "unlockContent",
+      "contentId": "content-transfer-order"
+    }
+  ],
+  "contentIds": [
+    "content-scene-report",
+    "content-teacup-photo",
+    "content-toxicology-summary",
+    "content-transfer-order",
+    "content-sisters-chat",
+    "content-argument-chat",
+    "content-toxicology-appendix"
+  ],
+  "dialogueIds": [
+    "dialogue-yishu-tea",
+    "dialogue-yishu-transfer",
+    "dialogue-yishu-leaving",
+    "dialogue-yishu-evidence"
+  ],
+  "reasoningIds": [
+    "reasoning-fingerprint",
+    "reasoning-motive",
+    "reasoning-first-hypothesis"
+  ],
+  "nextChapterId": null
+}

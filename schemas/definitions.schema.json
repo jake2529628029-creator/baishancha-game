@@ -1,0 +1,341 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://white-camellia.local/schemas/definitions.schema.json",
+  "definitions": {
+    "condition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "const": "always"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "chapterId"],
+          "properties": {
+            "type": {
+              "const": "chapterCompleted"
+            },
+            "chapterId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "flagId", "value"],
+          "properties": {
+            "type": {
+              "const": "flagEquals"
+            },
+            "flagId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "contentId"],
+          "properties": {
+            "type": {
+              "const": "contentViewed"
+            },
+            "contentId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "observationId"],
+          "properties": {
+            "type": {
+              "const": "observationDiscovered"
+            },
+            "observationId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "evidenceId"],
+          "properties": {
+            "type": {
+              "const": "evidenceCollected"
+            },
+            "evidenceId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "dialogueId"],
+          "properties": {
+            "type": {
+              "const": "dialogueCompleted"
+            },
+            "dialogueId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "reasoningId"],
+          "properties": {
+            "type": {
+              "const": "reasoningCompleted"
+            },
+            "reasoningId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "objectiveId"],
+          "properties": {
+            "type": {
+              "const": "objectiveCompleted"
+            },
+            "objectiveId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "conditions"],
+          "properties": {
+            "type": {
+              "enum": ["all", "any"]
+            },
+            "conditions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/condition"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "condition"],
+          "properties": {
+            "type": {
+              "const": "not"
+            },
+            "condition": {
+              "$ref": "#/definitions/condition"
+            }
+          }
+        }
+      ]
+    },
+    "event": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "contentId"],
+          "properties": {
+            "type": {
+              "enum": ["unlockContent", "markContentViewed"]
+            },
+            "contentId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "observationId"],
+          "properties": {
+            "type": {
+              "const": "discoverObservation"
+            },
+            "observationId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "evidenceId"],
+          "properties": {
+            "type": {
+              "const": "collectEvidence"
+            },
+            "evidenceId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "dialogueId"],
+          "properties": {
+            "type": {
+              "enum": ["unlockDialogue", "completeDialogue"]
+            },
+            "dialogueId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "reasoningId"],
+          "properties": {
+            "type": {
+              "const": "unlockReasoning"
+            },
+            "reasoningId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "reasoningId", "resultId"],
+          "properties": {
+            "type": {
+              "const": "completeReasoning"
+            },
+            "reasoningId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "resultId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "objectiveId"],
+          "properties": {
+            "type": {
+              "const": "completeObjective"
+            },
+            "objectiveId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "flagId", "value"],
+          "properties": {
+            "type": {
+              "const": "setFlag"
+            },
+            "flagId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "stage"],
+          "properties": {
+            "type": {
+              "const": "setChapterStage"
+            },
+            "stage": {
+              "enum": [
+                "not-started",
+                "investigating",
+                "reasoning-available",
+                "result",
+                "completed"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "chapterId"],
+          "properties": {
+            "type": {
+              "const": "completeChapter"
+            },
+            "chapterId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}

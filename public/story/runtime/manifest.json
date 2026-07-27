@@ -1,0 +1,16 @@
+{
+  "gameId": "white-camellia-will",
+  "schemaVersion": 1,
+  "contentVersion": "0.3.0",
+  "title": "白山茶遗嘱",
+  "subtitle": "暴雪封山后，沈慈云死在了听雪房。",
+  "startChapterId": "chapter-01",
+  "chapterIds": ["chapter-01"],
+  "dataFiles": {
+    "content": ["content/chapter-01.json"],
+    "observations": ["observations/chapter-01.json"],
+    "evidence": ["evidence/chapter-01.json"],
+    "dialogues": ["dialogues/shen-yishu-chapter-01.json"],
+    "reasoning": ["reasoning/chapter-01.json"]
+  }
+}

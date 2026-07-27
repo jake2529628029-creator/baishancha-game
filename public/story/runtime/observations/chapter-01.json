@@ -1,0 +1,89 @@
+[
+  {
+    "id": "observation-yishu-fingerprint",
+    "chapterId": "chapter-01",
+    "title": "杯柄上的完整指纹",
+    "description": "杯柄上最清晰的一枚指纹属于沈意舒，只能证明她接触过茶杯。",
+    "sourceContentIds": ["content-teacup-photo"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "content-teacup-photo"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "observation-aconite-in-tea",
+    "chapterId": "chapter-01",
+    "title": "茶液检出乌头成分",
+    "description": "快速检测确认茶液中存在乌头类生物碱，但定量结果尚未完成。",
+    "sourceContentIds": ["content-toxicology-summary"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "content-toxicology-summary"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "observation-transfer-at-2300",
+    "chapterId": "chapter-01",
+    "title": "23:00医疗转移",
+    "description": "沈意舒将在案发当晚23:00被强制转移，构成即时压力。",
+    "sourceContentIds": ["content-transfer-order"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "content-transfer-order"
+    },
+    "onDiscoverEvents": [
+      {
+        "type": "unlockDialogue",
+        "dialogueId": "dialogue-yishu-transfer"
+      }
+    ]
+  },
+  {
+    "id": "observation-yishu-refused-leaving",
+    "chapterId": "chapter-01",
+    "title": "沈意舒拒绝逃离",
+    "description": "沈意舒不接受姐姐安排的逃离方案，坚持要亲自面对身份真相。",
+    "sourceContentIds": ["content-sisters-chat"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "content-sisters-chat"
+    },
+    "onDiscoverEvents": [
+      {
+        "type": "unlockDialogue",
+        "dialogueId": "dialogue-yishu-leaving"
+      }
+    ]
+  },
+  {
+    "id": "observation-mother-daughter-conflict",
+    "chapterId": "chapter-01",
+    "title": "母女冲突",
+    "description": "沈意舒认为沈慈云准备让她再次从公众视野中消失。",
+    "sourceContentIds": ["content-argument-chat"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "content-argument-chat"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "observation-insufficient-dose",
+    "chapterId": "chapter-01",
+    "title": "茶中剂量不足",
+    "description": "茶中检出的毒物不足以单独导致沈慈云死亡，毒茶理论仍有缺口。",
+    "sourceContentIds": ["content-toxicology-appendix"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "content-toxicology-appendix"
+    },
+    "onDiscoverEvents": [
+      {
+        "type": "setChapterStage",
+        "stage": "result"
+      }
+    ]
+  }
+]

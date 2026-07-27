@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://white-camellia.local/schemas/dialogue.schema.json",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "chapterId",
+      "characterId",
+      "characterName",
+      "topic",
+      "entryCondition",
+      "openingLines",
+      "evidenceResponses",
+      "fallbackLines",
+      "completionEvents"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "chapterId": {
+        "type": "string"
+      },
+      "characterId": {
+        "type": "string"
+      },
+      "characterName": {
+        "type": "string",
+        "minLength": 1
+      },
+      "topic": {
+        "type": "string"
+      },
+      "entryCondition": {
+        "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/condition"
+      },
+      "openingLines": {
+        "$ref": "#/definitions/lines"
+      },
+      "evidenceResponses": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "acceptedEvidenceIds", "lines", "events"],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "acceptedEvidenceIds": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "lines": {
+              "$ref": "#/definitions/lines"
+            },
+            "events": {
+              "type": "array",
+              "items": {
+                "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/event"
+              }
+            }
+          }
+        }
+      },
+      "fallbackLines": {
+        "$ref": "#/definitions/lines"
+      },
+      "completionEvents": {
+        "type": "array",
+        "items": {
+          "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/event"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "lines": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["speakerId", "text"],
+        "properties": {
+          "speakerId": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

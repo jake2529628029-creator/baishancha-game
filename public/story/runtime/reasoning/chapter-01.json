@@ -1,0 +1,156 @@
+[
+  {
+    "id": "reasoning-fingerprint",
+    "chapterId": "chapter-01",
+    "type": "evidenceCombination",
+    "question": "茶杯上的完整指纹能够直接证明什么？",
+    "entryCondition": {
+      "type": "dialogueCompleted",
+      "dialogueId": "dialogue-yishu-tea"
+    },
+    "slots": [
+      {
+        "id": "contact-proof",
+        "label": "接触证据",
+        "kind": "evidence"
+      }
+    ],
+    "solutions": [
+      {
+        "id": "solution-contact-only",
+        "requiredEvidenceIds": ["evidence-yishu-fingerprint"],
+        "feedback": "指纹能够证明沈意舒接触过茶杯，但不能单独证明她实施了投毒。",
+        "events": [
+          {
+            "type": "completeReasoning",
+            "reasoningId": "reasoning-fingerprint",
+            "resultId": "solution-contact-only"
+          }
+        ]
+      }
+    ],
+    "fallbackFeedback": "当前证据无法直接证明沈意舒接触过茶杯。"
+  },
+  {
+    "id": "reasoning-motive",
+    "chapterId": "chapter-01",
+    "type": "evidenceCombination",
+    "question": "哪些材料能够建立沈意舒面临的现实压力？",
+    "entryCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-transfer-order"
+        },
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-mother-daughter-conflict"
+        }
+      ]
+    },
+    "slots": [
+      {
+        "id": "pressure-proof",
+        "label": "现实压力",
+        "kind": "evidence"
+      },
+      {
+        "id": "conflict-proof",
+        "label": "冲突证据",
+        "kind": "evidence"
+      }
+    ],
+    "solutions": [
+      {
+        "id": "solution-immediate-pressure",
+        "requiredEvidenceIds": [
+          "evidence-transfer-order",
+          "evidence-mother-daughter-conflict"
+        ],
+        "feedback": "两项材料可以建立即时压力和冲突，但动机仍不能代替行为证据。",
+        "events": [
+          {
+            "type": "completeReasoning",
+            "reasoningId": "reasoning-motive",
+            "resultId": "solution-immediate-pressure"
+          }
+        ]
+      }
+    ],
+    "fallbackFeedback": "只有冲突或只有文件，都不足以建立完整的现实压力。"
+  },
+  {
+    "id": "reasoning-first-hypothesis",
+    "chapterId": "chapter-01",
+    "type": "evidenceCombination",
+    "question": "根据第一轮调查，哪组证据能够支持“沈意舒通过白山茶投毒”的初步假设？",
+    "entryCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "reasoningCompleted",
+          "reasoningId": "reasoning-fingerprint"
+        },
+        {
+          "type": "reasoningCompleted",
+          "reasoningId": "reasoning-motive"
+        },
+        {
+          "type": "dialogueCompleted",
+          "dialogueId": "dialogue-yishu-transfer"
+        }
+      ]
+    },
+    "slots": [
+      {
+        "id": "opportunity",
+        "label": "接触机会",
+        "kind": "evidence"
+      },
+      {
+        "id": "toxicology",
+        "label": "毒物证据",
+        "kind": "evidence"
+      },
+      {
+        "id": "pressure",
+        "label": "现实压力",
+        "kind": "evidence"
+      },
+      {
+        "id": "conflict",
+        "label": "人物冲突",
+        "kind": "evidence"
+      }
+    ],
+    "solutions": [
+      {
+        "id": "solution-provisional-tea-theory",
+        "requiredEvidenceIds": [
+          "evidence-yishu-fingerprint",
+          "evidence-aconite-in-tea",
+          "evidence-transfer-order",
+          "evidence-mother-daughter-conflict"
+        ],
+        "feedback": "这是一条可以成立的初步调查路线，但仍不足以形成指控。",
+        "events": [
+          {
+            "type": "completeReasoning",
+            "reasoningId": "reasoning-first-hypothesis",
+            "resultId": "solution-provisional-tea-theory"
+          },
+          {
+            "type": "unlockContent",
+            "contentId": "content-toxicology-appendix"
+          },
+          {
+            "type": "setChapterStage",
+            "stage": "reasoning-available"
+          }
+        ]
+      }
+    ],
+    "fallbackFeedback": "当前组合只覆盖了动机、机会或毒物中的一部分，尚未形成完整的初步假设。"
+  }
+]

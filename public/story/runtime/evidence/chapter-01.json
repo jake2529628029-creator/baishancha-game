@@ -1,0 +1,80 @@
+[
+  {
+    "id": "evidence-yishu-fingerprint",
+    "chapterId": "chapter-01",
+    "title": "沈意舒的茶杯指纹",
+    "category": "physical",
+    "description": "沈意舒的完整指纹出现在茶杯杯柄上，证明她接触过茶杯。",
+    "sourceContentIds": ["content-teacup-photo"],
+    "observationIds": ["observation-yishu-fingerprint"],
+    "collectCondition": {
+      "type": "observationDiscovered",
+      "observationId": "observation-yishu-fingerprint"
+    }
+  },
+  {
+    "id": "evidence-aconite-in-tea",
+    "chapterId": "chapter-01",
+    "title": "茶液乌头残留",
+    "category": "medical",
+    "description": "听雪房茶杯残液中检出乌头类生物碱。",
+    "sourceContentIds": ["content-toxicology-summary"],
+    "observationIds": ["observation-aconite-in-tea"],
+    "collectCondition": {
+      "type": "observationDiscovered",
+      "observationId": "observation-aconite-in-tea"
+    }
+  },
+  {
+    "id": "evidence-transfer-order",
+    "chapterId": "chapter-01",
+    "title": "23:00医疗转移文件",
+    "category": "document",
+    "description": "沈意舒面临在当晚被强制转移的现实压力。",
+    "sourceContentIds": ["content-transfer-order"],
+    "observationIds": ["observation-transfer-at-2300"],
+    "collectCondition": {
+      "type": "observationDiscovered",
+      "observationId": "observation-transfer-at-2300"
+    }
+  },
+  {
+    "id": "evidence-refused-leaving",
+    "chapterId": "chapter-01",
+    "title": "拒绝逃离的聊天",
+    "category": "testimony",
+    "description": "沈意舒拒绝由姐姐安排去向，坚持亲自面对身份问题。",
+    "sourceContentIds": ["content-sisters-chat"],
+    "observationIds": ["observation-yishu-refused-leaving"],
+    "collectCondition": {
+      "type": "observationDiscovered",
+      "observationId": "observation-yishu-refused-leaving"
+    }
+  },
+  {
+    "id": "evidence-mother-daughter-conflict",
+    "chapterId": "chapter-01",
+    "title": "家宴前的母女冲突",
+    "category": "testimony",
+    "description": "争执表明沈意舒相信母亲将再次剥夺她的自由。",
+    "sourceContentIds": ["content-argument-chat"],
+    "observationIds": ["observation-mother-daughter-conflict"],
+    "collectCondition": {
+      "type": "observationDiscovered",
+      "observationId": "observation-mother-daughter-conflict"
+    }
+  },
+  {
+    "id": "evidence-insufficient-dose",
+    "chapterId": "chapter-01",
+    "title": "茶中毒物剂量不足",
+    "category": "medical",
+    "description": "茶液与胃内容物中的毒量不足以单独解释死亡结果。",
+    "sourceContentIds": ["content-toxicology-appendix"],
+    "observationIds": ["observation-insufficient-dose"],
+    "collectCondition": {
+      "type": "observationDiscovered",
+      "observationId": "observation-insufficient-dose"
+    }
+  }
+]

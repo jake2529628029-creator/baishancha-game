@@ -1,0 +1,259 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://white-camellia.local/schemas/content.schema.json",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "chapterId",
+      "type",
+      "title",
+      "source",
+      "summary",
+      "unlockCondition",
+      "observationIds",
+      "onViewEvents"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "chapterId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "type": {
+        "enum": ["document", "image", "chat"]
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source": {
+        "type": "string",
+        "minLength": 1
+      },
+      "summary": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unlockCondition": {
+        "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/condition"
+      },
+      "observationIds": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "onViewEvents": {
+        "type": "array",
+        "items": {
+          "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/event"
+        }
+      },
+      "document": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["metadata", "paragraphs"],
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "paragraphs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "text"],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "observationId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "image": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset", "alt", "display", "hotspots"],
+        "properties": {
+          "asset": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "display": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["aspectRatio", "fit", "focalPoint"],
+            "properties": {
+              "aspectRatio": {
+                "enum": ["16:9", "4:3", "3:2"]
+              },
+              "fit": {
+                "enum": ["cover", "contain"]
+              },
+              "focalPoint": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["x", "y"],
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                }
+              }
+            }
+          },
+          "hotspots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "label", "x", "y", "observationId"],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "x": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "y": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "observationId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "chat": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["participantIds", "participantNames", "messages"],
+        "properties": {
+          "participantIds": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "string"
+            }
+          },
+          "participantNames": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "messages": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "senderId", "time", "text"],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "senderId": {
+                  "type": "string"
+                },
+                "time": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "observationId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "type": {
+              "const": "document"
+            }
+          }
+        },
+        "then": {
+          "required": ["document"],
+          "properties": {
+            "document": {}
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "type": {
+              "const": "image"
+            }
+          }
+        },
+        "then": {
+          "required": ["image"],
+          "properties": {
+            "image": {}
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "type": {
+              "const": "chat"
+            }
+          }
+        },
+        "then": {
+          "required": ["chat"],
+          "properties": {
+            "chat": {}
+          }
+        }
+      }
+    ]
+  }
+}

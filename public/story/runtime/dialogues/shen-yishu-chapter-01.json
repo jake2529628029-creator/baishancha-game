@@ -1,0 +1,193 @@
+[
+  {
+    "id": "dialogue-yishu-tea",
+    "chapterId": "chapter-01",
+    "characterId": "shen-yishu",
+    "characterName": "沈意舒",
+    "topic": "谁送了茶",
+    "entryCondition": {
+      "type": "evidenceCollected",
+      "evidenceId": "evidence-yishu-fingerprint"
+    },
+    "openingLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "茶是我送的。我没有否认。"
+      }
+    ],
+    "evidenceResponses": [
+      {
+        "id": "response-teacup",
+        "acceptedEvidenceIds": [
+          "evidence-yishu-fingerprint",
+          "evidence-aconite-in-tea"
+        ],
+        "lines": [
+          {
+            "speakerId": "shen-yishu",
+            "text": "指纹能证明我端过茶，还是能证明我放了毒？"
+          }
+        ],
+        "events": [
+          {
+            "type": "completeDialogue",
+            "dialogueId": "dialogue-yishu-tea"
+          },
+          {
+            "type": "unlockReasoning",
+            "reasoningId": "reasoning-fingerprint"
+          }
+        ]
+      }
+    ],
+    "fallbackLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "这只能说明有人碰过一些东西。你想问我的，究竟是哪一步？"
+      }
+    ],
+    "completionEvents": []
+  },
+  {
+    "id": "dialogue-yishu-transfer",
+    "chapterId": "chapter-01",
+    "characterId": "shen-yishu",
+    "characterName": "沈意舒",
+    "topic": "23:00医疗转移",
+    "entryCondition": {
+      "type": "evidenceCollected",
+      "evidenceId": "evidence-transfer-order"
+    },
+    "openingLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "她不是要我休息。她是想让我从所有人眼前消失。"
+      }
+    ],
+    "evidenceResponses": [
+      {
+        "id": "response-transfer",
+        "acceptedEvidenceIds": ["evidence-transfer-order"],
+        "lines": [
+          {
+            "speakerId": "shen-yishu",
+            "text": "我知道那辆车什么时候来。知道不等于我杀了她。"
+          }
+        ],
+        "events": [
+          {
+            "type": "completeDialogue",
+            "dialogueId": "dialogue-yishu-transfer"
+          },
+          {
+            "type": "unlockContent",
+            "contentId": "content-sisters-chat"
+          }
+        ]
+      }
+    ],
+    "fallbackLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "别拿无关的东西试探我。那份转移通知就在你手里。"
+      }
+    ],
+    "completionEvents": []
+  },
+  {
+    "id": "dialogue-yishu-leaving",
+    "chapterId": "chapter-01",
+    "characterId": "shen-yishu",
+    "characterName": "沈意舒",
+    "topic": "为什么拒绝离开",
+    "entryCondition": {
+      "type": "evidenceCollected",
+      "evidenceId": "evidence-refused-leaving"
+    },
+    "openingLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "我不要任何人再用保护的名义替我决定。"
+      }
+    ],
+    "evidenceResponses": [
+      {
+        "id": "response-leaving",
+        "acceptedEvidenceIds": ["evidence-refused-leaving"],
+        "lines": [
+          {
+            "speakerId": "shen-yishu",
+            "text": "姐姐想救我，但她从来没有先问过我要什么。"
+          }
+        ],
+        "events": [
+          {
+            "type": "completeDialogue",
+            "dialogueId": "dialogue-yishu-leaving"
+          }
+        ]
+      }
+    ],
+    "fallbackLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "你还没有证明我为什么必须留下。"
+      }
+    ],
+    "completionEvents": []
+  },
+  {
+    "id": "dialogue-yishu-evidence",
+    "chapterId": "chapter-01",
+    "characterId": "shen-yishu",
+    "characterName": "沈意舒",
+    "topic": "茶杯与毒物",
+    "entryCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-yishu-fingerprint"
+        },
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-aconite-in-tea"
+        }
+      ]
+    },
+    "openingLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "你已经决定是我了吗？还是只是在找一个最方便的答案？"
+      }
+    ],
+    "evidenceResponses": [
+      {
+        "id": "response-combined-evidence",
+        "acceptedEvidenceIds": [
+          "evidence-yishu-fingerprint",
+          "evidence-aconite-in-tea"
+        ],
+        "lines": [
+          {
+            "speakerId": "shen-yishu",
+            "text": "你证明了我碰过杯子，也证明了杯子里有毒。中间那一步呢？"
+          }
+        ],
+        "events": [
+          {
+            "type": "completeDialogue",
+            "dialogueId": "dialogue-yishu-evidence"
+          }
+        ]
+      }
+    ],
+    "fallbackLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "把指纹和毒物放在一起，再告诉我你真正证明了什么。"
+      }
+    ],
+    "completionEvents": []
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://white-camellia.local/schemas/event.schema.json",
+  "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/event"
+}
