@@ -1,5 +1,8 @@
 node_modules/
 dist/
+outputs/
+work/
+.vercel/
 
 .vscode/
 .idea/

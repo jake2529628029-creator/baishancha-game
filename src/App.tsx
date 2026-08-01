@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ChapterSelect } from "./features/chapter-select/ChapterSelect";
+import { InvestigationToolsPrototype } from "./features/investigation-tools/InvestigationToolsPrototype";
 import { ChapterWorkspace } from "./features/chapter-workspace/ChapterWorkspace";
 import { PwaInstallButton } from "./pwa/PwaInstallButton";
 import { useGameStore } from "./stores/game-store";
@@ -29,7 +31,7 @@ function ErrorScreen({ message }: { message: string }) {
   );
 }
 
-function TitleScreen() {
+function TitleScreen({ onOpenChapters }: { onOpenChapters: () => void }) {
   const story = useGameStore((state) => state.story);
   const hasSave = useGameStore((state) => state.hasSave);
   const startNewGame = useGameStore((state) => state.startNewGame);
@@ -65,6 +67,13 @@ function TitleScreen() {
           >
             继续调查
           </button>
+          <button
+            className="secondary-button"
+            type="button"
+            onClick={onOpenChapters}
+          >
+            章节档案
+          </button>
           <PwaInstallButton />
           {hasSave ? (
             <button
@@ -78,7 +87,7 @@ function TitleScreen() {
         </div>
 
         <footer>
-          <span>V0.3 PWA DEMO · 支持离线存档</span>
+          <span>V0.4.2 调查工具原型 · 支持离线存档</span>
           <span>剧情包 {story.manifest.contentVersion}</span>
         </footer>
       </section>
@@ -91,10 +100,14 @@ export default function App() {
   const errorMessage = useGameStore((state) => state.errorMessage);
   const sessionStarted = useGameStore((state) => state.sessionStarted);
   const bootstrap = useGameStore((state) => state.bootstrap);
+  const [titleView, setTitleView] = useState<"title" | "chapters">("title");
 
   useEffect(() => {
     void bootstrap();
   }, [bootstrap]);
+
+  const isPrototype =
+    new URLSearchParams(window.location.search).get("ui-prototype") === "1";
 
   if (status === "idle" || status === "loading") {
     return <LoadingScreen />;
@@ -104,5 +117,17 @@ export default function App() {
     return <ErrorScreen message={errorMessage ?? "未知错误"} />;
   }
 
-  return sessionStarted ? <ChapterWorkspace /> : <TitleScreen />;
+  if (isPrototype) {
+    return <InvestigationToolsPrototype />;
+  }
+
+  if (sessionStarted) {
+    return <ChapterWorkspace />;
+  }
+
+  return titleView === "chapters" ? (
+    <ChapterSelect onBack={() => setTitleView("title")} />
+  ) : (
+    <TitleScreen onOpenChapters={() => setTitleView("chapters")} />
+  );
 }

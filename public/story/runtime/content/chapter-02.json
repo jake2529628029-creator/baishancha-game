@@ -1,0 +1,732 @@
+[
+  {
+    "id": "mat-ch02-xiaolu-register",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "沈小鹿旧身份登记记录",
+    "source": "栖湖旧案封存卷·户籍抄件",
+    "summary": "一份十二年前停止使用的儿童身份记录，多个关键字段经过遮盖。",
+    "unlockCondition": {
+      "type": "always"
+    },
+    "observationIds": [
+      "obs-ch02-xiaolu-record-exists",
+      "obs-ch02-xiaolu-record-redacted",
+      "obs-ch02-register-conflict"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-xiaolu-register"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-xiaolu-record-exists"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "登记姓名": "沈小鹿",
+        "记录状态": "停止使用",
+        "档案年代": "十二年前",
+        "保管级别": "限制调阅"
+      },
+      "paragraphs": [
+        {
+          "id": "xiaolu-register-01",
+          "text": "该记录属于一名未成年女性，现有抄件没有说明记录停止使用后的去向。"
+        },
+        {
+          "id": "xiaolu-register-02",
+          "text": "监护人、原居住地与后续去向被分三次遮盖，遮盖章来自不同经办部门。",
+          "observationId": "obs-ch02-xiaolu-record-redacted"
+        },
+        {
+          "id": "xiaolu-register-03",
+          "text": "变更原因栏只保留了“依专项保护程序处理”的字样，关联卷号不可辨认。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-shen-register",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "沈意舒现身份登记记录",
+    "source": "沈氏家族档案室·身份资料抄件",
+    "summary": "沈意舒目前使用的身份记录，部分早期资料未包含在现有抄件中。",
+    "unlockCondition": {
+      "type": "always"
+    },
+    "observationIds": [
+      "obs-ch02-shen-record-created-later",
+      "obs-ch02-register-conflict"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-shen-register"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-shen-record-created-later"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "登记姓名": "沈意舒",
+        "现存电子记录起始": "十二年前·10月19日",
+        "登记性质": "常规身份记录",
+        "当前状态": "有效"
+      },
+      "paragraphs": [
+        {
+          "id": "shen-register-01",
+          "text": "现有抄件只能确认电子记录的起始时间，无法确认是否存在更早的纸质登记。"
+        },
+        {
+          "id": "shen-register-02",
+          "text": "出生医学证明与首次登记机关资料未收入当前抄件，备注称相关依据需另行申请调阅。"
+        },
+        {
+          "id": "shen-register-03",
+          "text": "当前记录没有说明电子归档前的资料如何形成，也没有列出此前使用过的姓名。",
+          "observationId": "obs-ch02-register-conflict"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-restoration-request",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "成年身份资料申请",
+    "source": "何清和法律资料室·未归档申请",
+    "summary": "沈意舒在案发前三周提交的身份资料调阅与使用方式申请，最终没有进入正式办理程序。",
+    "unlockCondition": {
+      "type": "evidenceCollected",
+      "evidenceId": "evidence-ch02-sealed-qihu-archive"
+    },
+    "observationIds": [
+      "obs-ch02-restoration-signed",
+      "obs-ch02-restoration-purpose",
+      "obs-ch02-restoration-withdrawn"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-restoration-request"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-restoration-signed"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "申请人": "沈意舒",
+        "提交时间": "案发前三周",
+        "申请状态": "已撤回",
+        "档案编号": "RS-12-041"
+      },
+      "paragraphs": [
+        {
+          "id": "restoration-01",
+          "text": "申请书末页留有沈意舒的亲笔签名，签署日期与提交登记一致。"
+        },
+        {
+          "id": "restoration-02",
+          "text": "申请事项：调阅本人未成年时期被封存的身份资料，并在知悉全部事实后，自主重新决定身份使用方式。",
+          "observationId": "obs-ch02-restoration-purpose"
+        },
+        {
+          "id": "restoration-03",
+          "text": "申请理由未提及财产、继承或遗嘱，只写道：“我需要先知道发生过什么，再决定以后使用哪个名字。”"
+        },
+        {
+          "id": "restoration-04",
+          "text": "撤回栏由代理经办人填写，理由为“申请人情绪与健康状况不适宜继续办理”；申请人确认签名处为空。",
+          "observationId": "obs-ch02-restoration-withdrawn"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-will-conditions",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "遗嘱保护条款摘录",
+    "source": "沈慈云遗嘱附件·保护安排",
+    "summary": "遗嘱中关于沈意舒居住、治疗与身份资料管理的特别条款。",
+    "unlockCondition": {
+      "type": "detectivePropositionCompleted",
+      "boardId": "board-ch02-identity",
+      "propositionId": "proposition-ch02-two-names-one-person"
+    },
+    "observationIds": [
+      "obs-ch02-will-treatment-condition",
+      "obs-ch02-safety-bound-to-obedience"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-will-conditions"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-will-treatment-condition"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "文件性质": "遗嘱特别附件",
+        "适用对象": "沈意舒",
+        "拟定人": "沈慈云",
+        "保管人": "何清和"
+      },
+      "paragraphs": [
+        {
+          "id": "will-condition-01",
+          "text": "沈意舒可继续获得静园居住权、医疗照护及生活信托支付，相关安排不因婚姻状态改变。"
+        },
+        {
+          "id": "will-condition-02",
+          "text": "上述安排以接受指定医疗评估、遵守保护性居住建议，并由受托人继续保管封存身份资料为执行条件。"
+        },
+        {
+          "id": "will-condition-03",
+          "text": "若沈意舒拒绝指定评估或自行公开封存资料，受托人可暂停居住、照护及生活费用安排，直至风险复核完成。",
+          "observationId": "obs-ch02-safety-bound-to-obedience"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-qihu-photo-front",
+    "chapterId": "chapter-02",
+    "type": "image",
+    "title": "被裁切的栖湖旧照片",
+    "source": "栖湖旧案封存卷·现场照片",
+    "summary": "一张经过裁切的旧照片，画面中有一名成年女性和一名受惊的孩子。",
+    "unlockCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-ch02-identity-authorization"
+        },
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-ch02-adult-restoration-request"
+        }
+      ]
+    },
+    "observationIds": [
+      "obs-ch02-photo-protected-child",
+      "obs-ch02-photo-qihu-location",
+      "obs-ch02-photo-cropped-edge"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-qihu-photo-front"
+      }
+    ],
+    "image": {
+      "asset": "/story/runtime/assets/chapter-02/qihu-photo-front.png",
+      "alt": "栖湖旧照片中一名成年女性与一名孩子站在建筑外",
+      "display": {
+        "aspectRatio": "3:2",
+        "fit": "contain",
+        "focalPoint": {
+          "x": 50,
+          "y": 48
+        }
+      },
+      "hotspots": [
+        {
+          "id": "hotspot-qihu-child",
+          "label": "检查画面中的孩子",
+          "x": 54,
+          "y": 58,
+          "observationId": "obs-ch02-photo-protected-child"
+        },
+        {
+          "id": "hotspot-qihu-location",
+          "label": "辨认远处的建筑标识",
+          "x": 23,
+          "y": 30,
+          "observationId": "obs-ch02-photo-qihu-location"
+        },
+        {
+          "id": "hotspot-qihu-cropped-edge",
+          "label": "检查照片裁切边缘",
+          "x": 91,
+          "y": 47,
+          "observationId": "obs-ch02-photo-cropped-edge"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-qihu-photo-back",
+    "chapterId": "chapter-02",
+    "type": "image",
+    "title": "栖湖旧照片背面",
+    "source": "栖湖旧案封存卷·照片背面扫描",
+    "summary": "照片背面留有一行手写说明、归档编号与后补盖印。",
+    "unlockCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-photo-protected-child"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-photo-qihu-location"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-photo-cropped-edge"
+        }
+      ]
+    },
+    "observationIds": [
+      "obs-ch02-photo-back-note",
+      "obs-ch02-note-is-retelling"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-qihu-photo-back"
+      }
+    ],
+    "image": {
+      "asset": "/story/runtime/assets/chapter-02/qihu-photo-back.png",
+      "alt": "带有手写说明、归档编号和后补印章的栖湖旧照片背面",
+      "display": {
+        "aspectRatio": "3:2",
+        "fit": "contain",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "hotspots": [
+        {
+          "id": "hotspot-qihu-back-note",
+          "label": "辨认手写说明",
+          "x": 48,
+          "y": 42,
+          "observationId": "obs-ch02-photo-back-note"
+        },
+        {
+          "id": "hotspot-qihu-back-dates",
+          "label": "比较笔迹与归档日期",
+          "x": 74,
+          "y": 72,
+          "observationId": "obs-ch02-note-is-retelling"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-qihu-archive-index",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "栖湖旧案封存目录",
+    "source": "何清和法律资料室·限制调阅目录",
+    "summary": "栖湖事件相关资料的目录页，正文内容并未随目录一同开放。",
+    "unlockCondition": {
+      "type": "evidenceCollected",
+      "evidenceId": "evidence-ch02-dual-identity-records"
+    },
+    "observationIds": [
+      "obs-ch02-archive-four-categories",
+      "obs-ch02-files-indexed-not-destroyed"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-qihu-archive-index"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-archive-four-categories"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "卷宗名称": "栖湖未成年人紧急保护案",
+        "封存期限": "长期",
+        "目录页数": "4",
+        "当前权限": "仅可查看目录"
+      },
+      "paragraphs": [
+        {
+          "id": "archive-index-01",
+          "text": "第一类：现场处置记录与照片；第二类：医疗处置文件；第三类：身份保护手续；第四类：未成年人陈述附件。"
+        },
+        {
+          "id": "archive-index-02",
+          "text": "目录编号从QH-A01连续至QH-D07，每项均保留页数、封存日期和移交记录。"
+        },
+        {
+          "id": "archive-index-03",
+          "text": "全部条目状态均标记为“封存”，没有“销毁”“遗失”或“撤卷”记录。",
+          "observationId": "obs-ch02-files-indexed-not-destroyed"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-identity-authorization",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "未成年人身份保护授权书",
+    "source": "栖湖旧案封存卷·手续抄件",
+    "summary": "十二年前启动紧急身份保护程序时使用的授权文件，部分前置页面缺失。",
+    "unlockCondition": {
+      "type": "evidenceCollected",
+      "evidenceId": "evidence-ch02-sealed-qihu-archive"
+    },
+    "observationIds": [
+      "obs-ch02-authorization-wording",
+      "obs-ch02-authorization-context-missing"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-identity-authorization"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-authorization-wording"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "文件日期": "十二年前·10月18日",
+        "程序类型": "未成年人紧急身份保护",
+        "申请方": "沈慈云",
+        "见证经办": "何清和"
+      },
+      "paragraphs": [
+        {
+          "id": "authorization-01",
+          "text": "文件声称：“经办人员认为，本次保护安排符合受保护儿童当时的意愿，因此暂时隔离原身份资料，并停止对外提供原居住信息。”"
+        },
+        {
+          "id": "authorization-02",
+          "text": "受保护人姓名与签字区域均被封存章覆盖，现有抄件无法辨认。"
+        },
+        {
+          "id": "authorization-03",
+          "text": "本页从第三页开始，负责记录询问过程、风险说明与儿童原话的前两页未附在抄件中，因此无法证明文件所称意愿如何形成。",
+          "observationId": "obs-ch02-authorization-context-missing"
+        },
+        {
+          "id": "authorization-04",
+          "text": "有效期限栏写着“至安全风险解除或重新评估”，没有填写具体终止日期。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-wen-medical-fragment",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "温如素医疗记录残页",
+    "source": "栖湖旧案封存卷·医疗处置文件",
+    "summary": "一页十二年前的医疗意见，讨论受保护儿童在创伤期内的信息隔离安排。",
+    "unlockCondition": {
+      "type": "detectivePropositionCompleted",
+      "boardId": "board-ch02-identity",
+      "propositionId": "proposition-ch02-two-names-one-person"
+    },
+    "observationIds": [
+      "obs-ch02-medical-temporary-wording",
+      "obs-ch02-medical-record-is-old"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-wen-medical-fragment"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-medical-temporary-wording"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "记录人": "温如素",
+        "记录时间": "十二年前·10月18日",
+        "文件状态": "残页",
+        "页码": "第6页"
+      },
+      "paragraphs": [
+        {
+          "id": "medical-fragment-01",
+          "text": "受保护儿童目前存在明显惊恐、失眠及回避反应，不宜立即接触可能暴露其所在位置的人员与信息。"
+        },
+        {
+          "id": "medical-fragment-02",
+          "text": "建议在急性创伤期内采取临时信息隔离与稳定照护；该建议不代替后续独立评估，也不应被视为永久处置意见。"
+        },
+        {
+          "id": "medical-fragment-03",
+          "text": "本页记录时间距离栖湖事件不足四十八小时，后续复核页未包含在当前残件中。",
+          "observationId": "obs-ch02-medical-record-is-old"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-inventory-photo-1829",
+    "chapterId": "chapter-02",
+    "type": "image",
+    "title": "医疗转移物品清点照片·18:29",
+    "source": "静园后勤终端·转移准备记录",
+    "summary": "医疗转移工作人员按流程拍摄的随身行李与常用照护用品清点图。",
+    "unlockCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-transfer-appendix-index"
+    },
+    "observationIds": [
+      "obs-ch02-inventory-1829-time",
+      "obs-ch02-inventory-general-difference"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-inventory-photo-1829"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-inventory-1829-time"
+      }
+    ],
+    "image": {
+      "asset": "/story/runtime/assets/chapter-02/inventory-1829.png",
+      "alt": "18时29分拍摄的医疗转移行李与常用照护用品清点照片",
+      "display": {
+        "aspectRatio": "16:9",
+        "fit": "contain",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "hotspots": []
+    }
+  },
+  {
+    "id": "mat-ch02-inventory-photo-1838",
+    "chapterId": "chapter-02",
+    "type": "image",
+    "title": "医疗转移物品复核照片·18:38",
+    "source": "静园后勤终端·转移准备记录",
+    "summary": "同批转移物品完成封装后的例行复核照片。",
+    "unlockCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-inventory-photo-1829"
+    },
+    "observationIds": [
+      "obs-ch02-inventory-1838-time",
+      "obs-ch02-inventory-general-difference"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-inventory-photo-1838"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-inventory-1838-time"
+      }
+    ],
+    "image": {
+      "asset": "/story/runtime/assets/chapter-02/inventory-1838.png",
+      "alt": "18时38分拍摄的医疗转移行李封装复核照片",
+      "display": {
+        "aspectRatio": "16:9",
+        "fit": "contain",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "hotspots": [
+        {
+          "id": "hotspot-inventory-general-compare",
+          "label": "对照两张清点照片",
+          "x": 50,
+          "y": 50,
+          "observationId": "obs-ch02-inventory-general-difference"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-transfer-appendix-index",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "医疗转移附件目录",
+    "source": "静园临时医疗转移卷",
+    "summary": "案发当晚医疗转移安排所附的物品、授权与既往资料目录。",
+    "unlockCondition": {
+      "type": "detectivePropositionCompleted",
+      "boardId": "board-ch02-identity",
+      "propositionId": "proposition-ch02-two-names-one-person"
+    },
+    "observationIds": [
+      "obs-ch02-child-appendix-sealed",
+      "obs-ch02-transfer-attachments-exist",
+      "obs-ch02-objections-content-locked"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-transfer-appendix-index"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-child-appendix-sealed"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-transfer-attachments-exist"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "文件时间": "案发当日·18:26",
+        "执行项目": "23:00保护性医疗转移",
+        "附件数量": "8",
+        "当前权限": "部分开放"
+      },
+      "paragraphs": [
+        {
+          "id": "transfer-index-01",
+          "text": "附件一：转移通知；附件二：随行物品初次清点；附件三：封装复核；附件四：备用生活与医疗用品签收。"
+        },
+        {
+          "id": "transfer-index-02",
+          "text": "附件五：既往身份保护摘要；附件六：未成年人陈述音轨副本；附件七：成年申请人异议记录；附件八：儿童手印、笔迹与年龄鉴定页〔未解封〕。"
+        },
+        {
+          "id": "transfer-index-03",
+          "text": "附件六仅开放受损副本，原始载体仍在旧案卷内封存；附件八仅显示目录名称，不提供鉴定结论。"
+        },
+        {
+          "id": "transfer-index-04",
+          "text": "附件七标记为“限制调阅”，目录未附正文，也没有申请人确认其异议已被处理的记录。",
+          "observationId": "obs-ch02-objections-content-locked"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-spare-supply-receipt",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "旅行备用医疗物资签收联",
+    "source": "静园旅行医疗物资记录",
+    "summary": "案发前三周准备的一批普通旅行备用医疗物资签收记录。",
+    "unlockCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-inventory-photo-1838"
+    },
+    "observationIds": [
+      "obs-ch02-routine-supply-signed"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-spare-supply-receipt"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-routine-supply-signed"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "签收时间": "案发前三周",
+        "用途": "旅行备用医疗物资",
+        "代签人": "沈仪真",
+        "记录类型": "常规后勤"
+      },
+      "paragraphs": [
+        {
+          "id": "supply-receipt-01",
+          "text": "签收项目包括旅行洗护包、保温毯、饮用水、一次性餐具、基础护理耗材及封装的旅行备用医疗物资。"
+        },
+        {
+          "id": "supply-receipt-02",
+          "text": "沈仪真在接收栏代签，备注注明物资暂由家属代为接收。"
+        },
+        {
+          "id": "supply-receipt-03",
+          "text": "全部物资按常规后勤流程封装，实际使用前由接收地点重新登记。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mat-ch02-child-audio-fragment",
+    "chapterId": "chapter-02",
+    "type": "document",
+    "title": "损坏音轨转写稿",
+    "source": "栖湖旧案封存卷·未成年人陈述附件副本",
+    "summary": "一段噪声严重、来源链不完整的儿童声音转写，录音对象尚未核实。",
+    "unlockCondition": {
+      "type": "detectivePropositionCompleted",
+      "boardId": "board-ch02-identity",
+      "propositionId": "proposition-ch02-two-names-one-person"
+    },
+    "observationIds": [
+      "obs-ch02-child-voice-fear",
+      "obs-ch02-audio-identity-unverified"
+    ],
+    "onViewEvents": [
+      {
+        "type": "markContentViewed",
+        "contentId": "mat-ch02-child-audio-fragment"
+      },
+      {
+        "type": "discoverObservation",
+        "observationId": "obs-ch02-audio-identity-unverified"
+      }
+    ],
+    "document": {
+      "metadata": {
+        "载体": "损坏音轨数字化副本",
+        "录制时间": "十二年前·日期未完整保留",
+        "说话者": "未知儿童",
+        "校验状态": "身份未核实"
+      },
+      "paragraphs": [
+        {
+          "id": "audio-transcript-01",
+          "text": "［持续底噪］成年女性：你现在最害怕什么？"
+        },
+        {
+          "id": "audio-transcript-02",
+          "text": "儿童声音：我怕他们找到我……我不想回去。",
+          "observationId": "obs-ch02-child-voice-fear"
+        },
+        {
+          "id": "audio-transcript-03",
+          "text": "［约十一秒无法辨认］儿童声音：我不想再见到他们。"
+        },
+        {
+          "id": "audio-transcript-04",
+          "text": "转写说明：原始载体未随副本开放，现有音轨缺少完整起止段、设备编号与连续移交记录，不能据此确认说话者身份。"
+        }
+      ]
+    }
+  }
+]

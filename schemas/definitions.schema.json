@@ -142,6 +142,74 @@
         {
           "type": "object",
           "additionalProperties": false,
+          "required": [
+            "type",
+            "relationshipId",
+            "dimension",
+            "state"
+          ],
+          "properties": {
+            "type": {
+              "const": "relationshipStateEquals"
+            },
+            "relationshipId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dimension": {
+              "enum": [
+                "trust",
+                "suspicion",
+                "understanding",
+                "hidden_information"
+              ]
+            },
+            "state": {
+              "enum": [
+                "unknown",
+                "suspected",
+                "confirmed",
+                "questioned",
+                "reinterpreted"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "puzzleId"],
+          "properties": {
+            "type": {
+              "const": "timelineCompleted"
+            },
+            "puzzleId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "boardId", "propositionId"],
+          "properties": {
+            "type": {
+              "const": "detectivePropositionCompleted"
+            },
+            "boardId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "propositionId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
           "required": ["type", "conditions"],
           "properties": {
             "type": {
@@ -270,6 +338,116 @@
               "const": "completeObjective"
             },
             "objectiveId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "relationshipId",
+            "dimension",
+            "state"
+          ],
+          "properties": {
+            "type": {
+              "const": "updateRelationship"
+            },
+            "relationshipId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dimension": {
+              "enum": [
+                "trust",
+                "suspicion",
+                "understanding",
+                "hidden_information"
+              ]
+            },
+            "state": {
+              "enum": [
+                "unknown",
+                "suspected",
+                "confirmed",
+                "questioned",
+                "reinterpreted"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "puzzleId",
+            "orderedEventIds",
+            "matched",
+            "solutionId"
+          ],
+          "properties": {
+            "type": {
+              "const": "recordTimelineOrder"
+            },
+            "puzzleId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "orderedEventIds": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "matched": {
+              "type": "boolean"
+            },
+            "solutionId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "puzzleId"],
+          "properties": {
+            "type": {
+              "const": "completeTimelinePuzzle"
+            },
+            "puzzleId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "boardId", "propositionId"],
+          "properties": {
+            "type": {
+              "const": "completeDetectiveProposition"
+            },
+            "boardId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "propositionId": {
               "type": "string",
               "minLength": 1
             }

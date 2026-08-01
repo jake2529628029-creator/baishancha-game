@@ -1,0 +1,374 @@
+[
+  {
+    "id": "obs-ch02-xiaolu-record-exists",
+    "chapterId": "chapter-02",
+    "title": "沈小鹿的旧记录",
+    "description": "旧式登记簿中确实存在“沈小鹿”的记录，但记录本身没有说明她后来的去向。",
+    "sourceContentIds": ["mat-ch02-xiaolu-register"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-xiaolu-register"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-xiaolu-record-redacted",
+    "chapterId": "chapter-02",
+    "title": "旧记录的多处遮盖",
+    "description": "沈小鹿记录中的监护人、原居住地和后续去向被不同经办部门分次遮盖。",
+    "sourceContentIds": ["mat-ch02-xiaolu-register"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-xiaolu-register"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-shen-record-created-later",
+    "chapterId": "chapter-02",
+    "title": "较晚出现的现身份记录",
+    "description": "沈意舒的现行电子记录从十二年前开始，现有页面没有展示更早的资料链。",
+    "sourceContentIds": ["mat-ch02-shen-register"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-shen-register"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-register-conflict",
+    "chapterId": "chapter-02",
+    "title": "两套身份记录的结构性冲突",
+    "description": "沈小鹿的旧记录停止使用，沈意舒的新记录随后出现，出生资料与监护资料之间缺少连续说明；仅凭这两页仍不能确认两者是否为同一人。",
+    "sourceContentIds": [
+      "mat-ch02-xiaolu-register",
+      "mat-ch02-shen-register"
+    ],
+    "discoverCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "contentViewed",
+          "contentId": "mat-ch02-xiaolu-register"
+        },
+        {
+          "type": "contentViewed",
+          "contentId": "mat-ch02-shen-register"
+        }
+      ]
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-restoration-signed",
+    "chapterId": "chapter-02",
+    "title": "沈意舒亲笔签署申请",
+    "description": "成年身份资料申请由沈意舒本人签署，表明她曾主动启动相关程序。",
+    "sourceContentIds": ["mat-ch02-restoration-request"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-restoration-request"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-restoration-purpose",
+    "chapterId": "chapter-02",
+    "title": "重新决定身份使用方式",
+    "description": "申请事项是调阅未成年时期被封存的资料，并在知悉事实后自主决定今后使用何种身份。",
+    "sourceContentIds": ["mat-ch02-restoration-request"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-restoration-request"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-restoration-withdrawn",
+    "chapterId": "chapter-02",
+    "title": "缺少本人确认的撤回",
+    "description": "申请后来被代理经办人填写为撤回，但申请人确认签名处为空，现有文件不能说明是谁促成撤回。",
+    "sourceContentIds": ["mat-ch02-restoration-request"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-restoration-request"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-will-treatment-condition",
+    "chapterId": "chapter-02",
+    "title": "遗嘱中的医疗评估条件",
+    "description": "遗嘱安排把指定医疗评估和保护性居住建议列为生活保障继续执行的条件。",
+    "sourceContentIds": ["mat-ch02-will-conditions"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-will-conditions"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-safety-bound-to-obedience",
+    "chapterId": "chapter-02",
+    "title": "保障与服从相互绑定",
+    "description": "拒绝指定评估或自行公开封存资料，可能导致居住、照护和生活费用暂停。",
+    "sourceContentIds": ["mat-ch02-will-conditions"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-will-conditions"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-photo-protected-child",
+    "chapterId": "chapter-02",
+    "title": "照片中的保护动作",
+    "description": "照片中的成年女性以身体挡在受惊儿童与镜头之间，动作具有明确的保护意味。",
+    "sourceContentIds": ["mat-ch02-qihu-photo-front"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-qihu-photo-front"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-photo-qihu-location",
+    "chapterId": "chapter-02",
+    "title": "栖湖地点标识",
+    "description": "画面远处的建筑标识与栖湖旧案地点一致。",
+    "sourceContentIds": ["mat-ch02-qihu-photo-front"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-qihu-photo-front"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-photo-cropped-edge",
+    "chapterId": "chapter-02",
+    "title": "照片经过裁切",
+    "description": "照片一侧存在明显裁切边缘，原始画面可能包含当前副本未展示的内容。",
+    "sourceContentIds": ["mat-ch02-qihu-photo-front"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-qihu-photo-front"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-photo-back-note",
+    "chapterId": "chapter-02",
+    "title": "照片背面的保护说明",
+    "description": "照片背面留有一段关于儿童害怕被找到的手写说明。",
+    "sourceContentIds": ["mat-ch02-qihu-photo-back"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-qihu-photo-back"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-note-is-retelling",
+    "chapterId": "chapter-02",
+    "title": "后补的转述文字",
+    "description": "手写说明的笔迹与归档日期表明它是事后补记，属于他人转述，不是儿童当时留下的直接陈述。",
+    "sourceContentIds": ["mat-ch02-qihu-photo-back"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-qihu-photo-back"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-archive-four-categories",
+    "chapterId": "chapter-02",
+    "title": "封存档案的四类条目",
+    "description": "栖湖档案目录包含现场记录、医疗处置、身份保护手续和未成年人陈述附件四类资料。",
+    "sourceContentIds": ["mat-ch02-qihu-archive-index"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-qihu-archive-index"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-files-indexed-not-destroyed",
+    "chapterId": "chapter-02",
+    "title": "资料被封存而非销毁",
+    "description": "目录编号连续，全部条目标记为封存，没有销毁、遗失或撤卷记录。",
+    "sourceContentIds": ["mat-ch02-qihu-archive-index"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-qihu-archive-index"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-child-appendix-sealed",
+    "chapterId": "chapter-02",
+    "title": "儿童鉴定附件仍未解封",
+    "description": "目录列有儿童手印、笔迹与年龄鉴定页，但该附件仍未解封，当前无法看到鉴定结果。",
+    "sourceContentIds": ["mat-ch02-transfer-appendix-index"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-transfer-appendix-index"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-authorization-wording",
+    "chapterId": "chapter-02",
+    "title": "授权书声称符合儿童意愿",
+    "description": "授权文件声称当时的保护安排符合受保护儿童的意愿，但这只是文件中的程序性表述。",
+    "sourceContentIds": ["mat-ch02-identity-authorization"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-identity-authorization"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-authorization-context-missing",
+    "chapterId": "chapter-02",
+    "title": "意愿形成过程缺页",
+    "description": "记录询问过程、风险说明与儿童原话的前置页面缺失，无法证明文件所称意愿如何形成。",
+    "sourceContentIds": ["mat-ch02-identity-authorization"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-identity-authorization"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-medical-temporary-wording",
+    "chapterId": "chapter-02",
+    "title": "医疗建议明确写作临时",
+    "description": "医疗残页建议只在急性创伤期采取临时信息隔离，并注明不应视为永久处置意见。",
+    "sourceContentIds": ["mat-ch02-wen-medical-fragment"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-wen-medical-fragment"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-medical-record-is-old",
+    "chapterId": "chapter-02",
+    "title": "医疗记录只属于旧案急性期",
+    "description": "该记录形成于栖湖事件后不足四十八小时，不能直接代表十二年后的医学判断。",
+    "sourceContentIds": ["mat-ch02-wen-medical-fragment"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-wen-medical-fragment"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-inventory-1829-time",
+    "chapterId": "chapter-02",
+    "title": "18:29清点照片",
+    "description": "第一张医疗转移物品照片的记录时间为18:29。",
+    "sourceContentIds": ["mat-ch02-inventory-photo-1829"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-inventory-photo-1829"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-inventory-1838-time",
+    "chapterId": "chapter-02",
+    "title": "18:38复核照片",
+    "description": "第二张医疗转移物品照片的记录时间为18:38。",
+    "sourceContentIds": ["mat-ch02-inventory-photo-1838"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-inventory-photo-1838"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-inventory-general-difference",
+    "chapterId": "chapter-02",
+    "title": "两张清点照片的摆放差异",
+    "description": "两张照片中的部分普通物品位置和整体摆放方式存在差异；当前比较不能确认任何具体物品发生增减或更换。",
+    "sourceContentIds": [
+      "mat-ch02-inventory-photo-1829",
+      "mat-ch02-inventory-photo-1838"
+    ],
+    "discoverCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "contentViewed",
+          "contentId": "mat-ch02-inventory-photo-1829"
+        },
+        {
+          "type": "contentViewed",
+          "contentId": "mat-ch02-inventory-photo-1838"
+        }
+      ]
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-transfer-attachments-exist",
+    "chapterId": "chapter-02",
+    "title": "医疗转移附有八项资料",
+    "description": "案发当晚的医疗转移目录列出八项附件，涵盖物品、授权、既往资料和受限档案。",
+    "sourceContentIds": ["mat-ch02-transfer-appendix-index"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-transfer-appendix-index"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-objections-content-locked",
+    "chapterId": "chapter-02",
+    "title": "成年申请人的异议仍受限",
+    "description": "目录列有成年申请人的异议记录，但正文仍限制调阅，也没有申请人确认异议已被处理的记录。",
+    "sourceContentIds": ["mat-ch02-transfer-appendix-index"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-transfer-appendix-index"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-routine-supply-signed",
+    "chapterId": "chapter-02",
+    "title": "沈仪真代签普通旅行物资",
+    "description": "案发前三周，沈仪真代签接收了一批普通旅行备用医疗物资；记录只证明常规代收。",
+    "sourceContentIds": ["mat-ch02-spare-supply-receipt"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-spare-supply-receipt"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-child-voice-fear",
+    "chapterId": "chapter-02",
+    "title": "未知儿童的恐惧表达",
+    "description": "转写稿中的未知儿童表达了害怕被找到和拒绝回去的情绪。",
+    "sourceContentIds": ["mat-ch02-child-audio-fragment"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-child-audio-fragment"
+    },
+    "onDiscoverEvents": []
+  },
+  {
+    "id": "obs-ch02-audio-identity-unverified",
+    "chapterId": "chapter-02",
+    "title": "音轨说话者身份未核实",
+    "description": "当前只有来源链不完整的损坏音轨转写稿，无法确认录音真实性或说话者身份。",
+    "sourceContentIds": ["mat-ch02-child-audio-fragment"],
+    "discoverCondition": {
+      "type": "contentViewed",
+      "contentId": "mat-ch02-child-audio-fragment"
+    },
+    "onDiscoverEvents": []
+  }
+]

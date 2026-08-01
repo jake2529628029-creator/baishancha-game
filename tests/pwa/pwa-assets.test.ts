@@ -47,15 +47,53 @@ describe("PWA assets", () => {
     });
   });
 
-  it("precaches the game shell and chapter-one runtime", () => {
+  it("precaches the game shell and all available chapter runtime", () => {
     const serviceWorker = readFileSync(
       projectFile("public/sw.js"),
       "utf8"
     );
 
     expect(serviceWorker).toContain("/index.html");
+    expect(serviceWorker).toContain(
+      'CACHE_VERSION = "white-camellia-v0.4.2-pwa-2"'
+    );
     expect(serviceWorker).toContain("/story/runtime/manifest.json");
+    expect(serviceWorker).toContain("/story/runtime/chapter-manifest.json");
     expect(serviceWorker).toContain("/story/runtime/chapters/chapter-01.json");
+    expect(serviceWorker).toContain("/story/runtime/chapters/chapter-02.json");
+    expect(serviceWorker).toContain("/story/runtime/content/chapter-02.json");
+    expect(serviceWorker).toContain(
+      "/story/runtime/observations/chapter-02.json"
+    );
+    expect(serviceWorker).toContain("/story/runtime/evidence/chapter-02.json");
+    expect(serviceWorker).toContain("/story/runtime/dialogues/chapter-02.json");
+    expect(serviceWorker).toContain(
+      "/story/runtime/framework/relationships.json"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/framework/relationships-chapter-02.json"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/framework/timelines.json"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/framework/detective-boards.json"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/framework/detective-boards-chapter-02.json"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/assets/chapter-02/qihu-photo-front.png"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/assets/chapter-02/qihu-photo-back.png"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/assets/chapter-02/inventory-1829.png"
+    );
+    expect(serviceWorker).toContain(
+      "/story/runtime/assets/chapter-02/inventory-1838.png"
+    );
     expect(serviceWorker).toContain("matchAll");
     expect(serviceWorker).toContain("/assets/");
   });

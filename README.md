@@ -2,15 +2,24 @@
 
 女性向悬疑调查网页游戏。
 
-当前版本为 V0.3 第一章正式试玩 Demo，包含：
+当前版本为 V0.4.2 Investigation Tools UI Prototype。第一章试玩内容和
+V0.4 Script Lock 保持不变，新增：
 
 - React、TypeScript 与 Vite 基础工程
 - JSON 剧情加载与 Schema 校验
 - Zustand 游戏状态
-- IndexedDB 自动存档与 V1→V2 迁移
+- IndexedDB 自动存档与 V1／V2／V3→V4 迁移
 - 可递归组合的剧情条件
 - 白名单事件执行器
-- 第一章章节进入、自动解锁、目标与完成状态
+- Chapter 0—5 独立清单、章节解锁、分章进度、切换恢复与完成状态
+- JSON 驱动的 Relationship Engine，使用分类理解状态而非数值好感
+- 可提交顺序并判断正确性的 Timeline Engine
+- 支持人物、证据、时间节点、自由连接与命题的 Detective Board Engine
+- 完全由 chapter-manifest 驱动的章节选择页
+- 展示分类理解状态和变化记录的人物关系图
+- 同时支持鼠标、触控与无障碍按钮排序的时间线面板
+- 支持卡片拖动、自由连线、删除连接和布局存档的侦探墙
+- 手机竖屏调查布局与手势缩放图片查看器
 - 第一章 Content、Observation、Evidence、Dialogue 与 Reasoning 数据
 - JSON 驱动的双场景调查工作台
 - 文档、图片热点与聊天记录查看器
@@ -22,7 +31,9 @@
 - 调查完成度、线索统计、错误推理与玩家评价结算
 - 统一图片比例、色彩、排版和交互规范
 
-完整地图、时间线、人物关系图与 AI NPC 尚未进入开发。
+第二章剧情 JSON、完整地图与 AI NPC 尚未进入开发。第一章尚未提供关系、
+时间线和侦探墙剧情数据，因此正式工作台会显示诚实空状态；开发验收可访问
+`/?ui-prototype=1`，使用不进入剧情包的中性 TypeScript fixture 验证交互。
 
 ## 常用命令
 

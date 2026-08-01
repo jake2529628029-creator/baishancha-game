@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGameStore } from "../../stores/game-store";
 import type {
   ChatMessage,
@@ -81,7 +81,7 @@ function DocumentView({
   );
 }
 
-function ImageView({
+export function ImageView({
   asset,
   alt,
   display,
@@ -93,25 +93,123 @@ function ImageView({
   hotspots: ImageHotspot[];
 }) {
   const aspectRatio = display.aspectRatio.replace(":", " / ");
-  const [zoomed, setZoomed] = useState(false);
+  const [transform, setTransform] = useState({ scale: 1, x: 0, y: 0 });
+  const transformRef = useRef(transform);
+  const pointers = useRef(new Map<number, { x: number; y: number }>());
+  const zoomed = transform.scale > 1;
+
+  const updateTransform = (next: { scale: number; x: number; y: number }) => {
+    transformRef.current = next;
+    setTransform(next);
+  };
+  const resetTransform = () => updateTransform({ scale: 1, x: 0, y: 0 });
+  const zoomBy = (amount: number) => {
+    const current = transformRef.current;
+    const scale = Math.min(3, Math.max(1, current.scale + amount));
+    updateTransform({
+      scale,
+      x: scale === 1 ? 0 : current.x,
+      y: scale === 1 ? 0 : current.y
+    });
+  };
 
   return (
     <div className="image-view">
       <div className="image-toolbar">
-        <p className="viewer-hint">可双指缩放，或使用放大模式检查细节。</p>
-        <button
-          className="secondary-button"
-          type="button"
-          aria-pressed={zoomed}
-          onClick={() => setZoomed((current) => !current)}
-        >
-          {zoomed ? "适应屏幕" : "放大照片"}
-        </button>
+        <p className="viewer-hint">可双指缩放；放大后单指拖动检查细节。</p>
+        <div className="image-zoom-controls" aria-label="照片缩放">
+          <button
+            className="secondary-button"
+            type="button"
+            aria-label="缩小照片"
+            disabled={transform.scale <= 1}
+            onClick={() => zoomBy(-0.5)}
+          >
+            −
+          </button>
+          <output>{Math.round(transform.scale * 100)}%</output>
+          <button
+            className="secondary-button"
+            type="button"
+            aria-label="放大照片"
+            disabled={transform.scale >= 3}
+            onClick={() => zoomBy(0.5)}
+          >
+            ＋
+          </button>
+          <button
+            className="secondary-button"
+            type="button"
+            disabled={!zoomed}
+            onClick={resetTransform}
+          >
+            适应屏幕
+          </button>
+        </div>
       </div>
-      <div className="image-viewport">
+      <div
+        className={`image-viewport${zoomed ? " is-zoomed" : ""}`}
+        onPointerDown={(event) => {
+          if ((event.target as HTMLElement).closest("button")) return;
+          pointers.current.set(event.pointerId, {
+            x: event.clientX,
+            y: event.clientY
+          });
+          event.currentTarget.setPointerCapture?.(event.pointerId);
+        }}
+        onPointerMove={(event) => {
+          const previous = pointers.current.get(event.pointerId);
+          if (!previous) return;
+          const others = [...pointers.current.entries()].filter(
+            ([id]) => id !== event.pointerId
+          );
+          const current = transformRef.current;
+
+          if (others.length) {
+            const other = others[0][1];
+            const oldDistance = Math.hypot(
+              previous.x - other.x,
+              previous.y - other.y
+            );
+            const newDistance = Math.hypot(
+              event.clientX - other.x,
+              event.clientY - other.y
+            );
+            if (oldDistance > 0) {
+              updateTransform({
+                ...current,
+                scale: Math.min(
+                  3,
+                  Math.max(1, current.scale * (newDistance / oldDistance))
+                )
+              });
+            }
+          } else if (current.scale > 1) {
+            updateTransform({
+              ...current,
+              x: current.x + event.clientX - previous.x,
+              y: current.y + event.clientY - previous.y
+            });
+          }
+
+          pointers.current.set(event.pointerId, {
+            x: event.clientX,
+            y: event.clientY
+          });
+        }}
+        onPointerUp={(event) => {
+          pointers.current.delete(event.pointerId);
+          event.currentTarget.releasePointerCapture?.(event.pointerId);
+          if (transformRef.current.scale <= 1) resetTransform();
+        }}
+        onPointerCancel={(event) => pointers.current.delete(event.pointerId)}
+      >
         <div
           className={`evidence-image${zoomed ? " is-zoomed" : ""}`}
-          style={{ aspectRatio }}
+          style={{
+            aspectRatio,
+            transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(${transform.scale})`
+          }}
         >
           <img
             src={asset}

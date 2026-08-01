@@ -35,6 +35,15 @@ export function DetectiveJournal() {
   const collectedEvidenceIds = useGameStore((state) => state.collectedEvidenceIds);
   const completedDialogueIds = useGameStore((state) => state.completedDialogueIds);
   const reasoningResults = useGameStore((state) => state.reasoningResults);
+  const relationshipStates = useGameStore(
+    (state) => state.relationshipStates
+  );
+  const completedTimelinePuzzleIds = useGameStore(
+    (state) => state.completedTimelinePuzzleIds
+  );
+  const detectiveBoardStates = useGameStore(
+    (state) => state.detectiveBoardStates
+  );
   const flags = useGameStore((state) => state.flags);
 
   if (!story || !currentChapterId) {
@@ -50,6 +59,9 @@ export function DetectiveJournal() {
     collectedEvidenceIds,
     completedDialogueIds,
     reasoningResults,
+    relationshipStates,
+    completedTimelinePuzzleIds,
+    detectiveBoardStates,
     flags
   };
   const visibleEntries = chapter.journalEntries.filter(

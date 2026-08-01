@@ -1,0 +1,377 @@
+{
+  "id": "chapter-02",
+  "order": 2,
+  "title": "不存在的女儿",
+  "summary": "两套不连续的身份记录把调查引向十二年前的栖湖旧案。玩家需要区分一次真实救援与此后持续至成年的身份限制。",
+  "scenes": [
+    {
+      "id": "scene-ch02-legal-records",
+      "name": "何清和法律资料室",
+      "eyebrow": "身份与遗嘱",
+      "description": "旧式登记、新身份资料、成年申请和保护条款被分散保存在不同卷宗中。",
+      "contentIds": [
+        "mat-ch02-xiaolu-register",
+        "mat-ch02-shen-register",
+        "mat-ch02-restoration-request",
+        "mat-ch02-will-conditions"
+      ]
+    },
+    {
+      "id": "scene-ch02-qihu-archive",
+      "name": "栖湖旧案封存区",
+      "eyebrow": "十二年前",
+      "description": "目录、授权手续、旧照片和损坏转写稿留下了同一场事件的不同侧面。",
+      "contentIds": [
+        "mat-ch02-qihu-archive-index",
+        "mat-ch02-identity-authorization",
+        "mat-ch02-qihu-photo-front",
+        "mat-ch02-qihu-photo-back",
+        "mat-ch02-wen-medical-fragment",
+        "mat-ch02-child-audio-fragment"
+      ]
+    },
+    {
+      "id": "scene-ch02-transfer-appendices",
+      "name": "医疗转移附件台",
+      "eyebrow": "案发当晚",
+      "description": "转移目录、两张清点照片和普通后勤签收记录需要逐项核对。",
+      "contentIds": [
+        "mat-ch02-transfer-appendix-index",
+        "mat-ch02-inventory-photo-1829",
+        "mat-ch02-inventory-photo-1838",
+        "mat-ch02-spare-supply-receipt"
+      ]
+    }
+  ],
+  "journalEntries": [
+    {
+      "id": "journal-ch02-fact-record-conflict",
+      "category": "fact",
+      "title": "两套身份记录存在结构性冲突",
+      "text": "沈小鹿的旧记录停止使用，沈意舒的新记录随后出现，但出生与监护资料链并不连续。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-dual-identity-records"
+      }
+    },
+    {
+      "id": "journal-ch02-fact-archive-preserved",
+      "category": "fact",
+      "title": "栖湖档案没有被销毁",
+      "text": "现场、医疗、身份手续和未成年人陈述仍有连续目录，只是正文受到封存限制。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-sealed-qihu-archive"
+      }
+    },
+    {
+      "id": "journal-ch02-fact-rescue",
+      "category": "fact",
+      "title": "照片记录了真实保护行为",
+      "text": "旧照片可以定位至栖湖，并显示沈慈云曾在危险现场保护一名受惊儿童。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-qihu-rescue-photo"
+      }
+    },
+    {
+      "id": "journal-ch02-fact-authorization-limit",
+      "category": "fact",
+      "title": "授权书只留下程序性声称",
+      "text": "文件声称保护安排符合儿童意愿，但形成过程缺页，无法证明授权的完整范围与持续期限。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-identity-authorization"
+      }
+    },
+    {
+      "id": "journal-ch02-fact-adult-request",
+      "category": "fact",
+      "title": "沈意舒成年后重新提出选择",
+      "text": "她要求调阅原始资料并重新决定身份使用方式；申请没有留下本人确认的执行结果。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-adult-restoration-request"
+      }
+    },
+    {
+      "id": "journal-ch02-fact-protection-conditions",
+      "category": "fact",
+      "title": "生活保障附带服从条件",
+      "text": "拒绝指定评估或自行公开封存资料，可能导致居住、照护和生活费用暂停。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-protection-conditions"
+      }
+    },
+    {
+      "id": "journal-ch02-hypothesis-identity-stages",
+      "category": "hypothesis",
+      "title": "两个名字属于同一个人",
+      "text": "沈小鹿与沈意舒是同一个人的两个身份阶段，身份变化起点与栖湖旧案中的保护安排有关。",
+      "revealCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-two-names-one-person"
+      }
+    },
+    {
+      "id": "journal-ch02-hypothesis-protection-boundary",
+      "category": "hypothesis",
+      "title": "救援不能构成永久授权",
+      "text": "十二年前的保护真实发生，但成年申请与条件性保障证明，当年的决定不能替代此后的知情与拒绝。",
+      "revealCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-rescue-has-expiry"
+      }
+    },
+    {
+      "id": "journal-ch02-question-audio-speaker",
+      "category": "question",
+      "title": "损坏音轨中的儿童是谁？",
+      "text": "转写稿记录了恐惧和拒绝回去，但当前副本不足以核实说话者身份。",
+      "revealCondition": {
+        "type": "contentViewed",
+        "contentId": "mat-ch02-child-audio-fragment"
+      }
+    },
+    {
+      "id": "journal-ch02-question-withdrawal",
+      "category": "question",
+      "title": "谁让成年申请停止办理？",
+      "text": "撤回栏缺少沈意舒本人确认，现有材料仍不能锁定具体作出撤回决定的人。",
+      "revealCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-adult-restoration-request"
+      }
+    }
+  ],
+  "result": {
+    "eyebrow": "第二章调查结论",
+    "title": "不存在的不是她",
+    "summary": "两套身份记录没有指向两个女孩或一次身份冒用，而是同一个人在栖湖旧案前后的两个身份阶段。沈慈云当年的救援真实，但成年沈意舒重新提出的选择没有得到执行。",
+    "confirmedFacts": [
+      "沈小鹿与沈意舒是同一个人的两个身份阶段",
+      "身份变化起点与栖湖旧案中的真实保护有关",
+      "沈慈云十二年前确实保护并救下了她",
+      "成年沈意舒要求调阅资料并重新决定身份使用方式",
+      "成年申请没有得到本人确认的执行结果",
+      "生活保障与服从治疗、转移及身份资料管理条件相互绑定"
+    ],
+    "unresolvedQuestions": [
+      "损坏音轨中的儿童究竟是谁？",
+      "谁具体促成了成年身份申请的撤回？",
+      "其他知情者为什么让临时保护持续了十二年？"
+    ],
+    "closingLine": "有人曾替她藏起名字，让她活下来。\n后来，他们忘了把选择名字的权利还给她。",
+    "evaluationTiers": [
+      {
+        "minimumScore": 96,
+        "title": "边界清晰的档案调查者",
+        "description": "你同时保留了救援真实与成年选择受限这两个事实，没有让其中一个抹去另一个。"
+      },
+      {
+        "minimumScore": 80,
+        "title": "谨慎的身份追索者",
+        "description": "你完成了主要身份链和关系命题，也能区分文件声称、玩家推断与已确认事实。"
+      },
+      {
+        "minimumScore": 60,
+        "title": "敏锐的旧案阅读者",
+        "description": "你找到了身份谜题的核心方向，但部分附件与授权边界仍值得回看。"
+      },
+      {
+        "minimumScore": 0,
+        "title": "仍在追问名字的人",
+        "description": "你抵达了章节结论，但还需要更谨慎地区分保护行为与持续授权。"
+      }
+    ]
+  },
+  "objectives": [
+    {
+      "id": "objective-ch02-compare-identity-records",
+      "text": "核对两套身份记录",
+      "completionCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-dual-identity-records"
+      }
+    },
+    {
+      "id": "objective-ch02-trace-qihu-archive",
+      "text": "找到未被销毁的旧案链",
+      "completionCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-sealed-qihu-archive"
+      }
+    },
+    {
+      "id": "objective-ch02-review-identity-choice",
+      "text": "检查身份手续与成年选择",
+      "completionCondition": {
+        "type": "all",
+        "conditions": [
+          {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-ch02-identity-authorization"
+          },
+          {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-ch02-adult-restoration-request"
+          }
+        ]
+      }
+    },
+    {
+      "id": "objective-ch02-verify-qihu-photo",
+      "text": "验证旧照片与栖湖案联系",
+      "completionCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-qihu-rescue-photo"
+      }
+    },
+    {
+      "id": "objective-ch02-solve-identity-proposition",
+      "text": "完成命题一：两个名字，一个人？",
+      "completionCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-two-names-one-person"
+      }
+    },
+    {
+      "id": "objective-ch02-review-protection-conditions",
+      "text": "检查保护条款",
+      "completionCondition": {
+        "type": "evidenceCollected",
+        "evidenceId": "evidence-ch02-protection-conditions"
+      }
+    },
+    {
+      "id": "objective-ch02-investigate-appendices",
+      "text": "检查封存与转移附件",
+      "completionCondition": {
+        "type": "all",
+        "conditions": [
+          {
+            "type": "contentViewed",
+            "contentId": "mat-ch02-wen-medical-fragment"
+          },
+          {
+            "type": "contentViewed",
+            "contentId": "mat-ch02-transfer-appendix-index"
+          },
+          {
+            "type": "contentViewed",
+            "contentId": "mat-ch02-inventory-photo-1829"
+          },
+          {
+            "type": "contentViewed",
+            "contentId": "mat-ch02-inventory-photo-1838"
+          },
+          {
+            "type": "contentViewed",
+            "contentId": "mat-ch02-spare-supply-receipt"
+          },
+          {
+            "type": "contentViewed",
+            "contentId": "mat-ch02-child-audio-fragment"
+          }
+        ]
+      }
+    },
+    {
+      "id": "objective-ch02-complete-identity-dialogues",
+      "text": "完成两段关键询问",
+      "completionCondition": {
+        "type": "all",
+        "conditions": [
+          {
+            "type": "dialogueCompleted",
+            "dialogueId": "dialogue-ch02-yishu-identity-choice"
+          },
+          {
+            "type": "dialogueCompleted",
+            "dialogueId": "dialogue-ch02-he-authorization-boundary"
+          }
+        ]
+      }
+    },
+    {
+      "id": "objective-ch02-solve-protection-proposition",
+      "text": "完成命题二：救援有期限吗？",
+      "completionCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-rescue-has-expiry"
+      }
+    }
+  ],
+  "entryCondition": {
+    "type": "chapterCompleted",
+    "chapterId": "chapter-01"
+  },
+  "completionCondition": {
+    "type": "all",
+    "conditions": [
+      {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-two-names-one-person"
+      },
+      {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-rescue-has-expiry"
+      },
+      {
+        "type": "dialogueCompleted",
+        "dialogueId": "dialogue-ch02-yishu-identity-choice"
+      },
+      {
+        "type": "dialogueCompleted",
+        "dialogueId": "dialogue-ch02-he-authorization-boundary"
+      },
+      {
+        "type": "objectiveCompleted",
+        "objectiveId": "objective-ch02-investigate-appendices"
+      }
+    ]
+  },
+  "initialEvents": [
+    {
+      "type": "setChapterStage",
+      "stage": "investigating"
+    },
+    {
+      "type": "unlockContent",
+      "contentId": "mat-ch02-xiaolu-register"
+    },
+    {
+      "type": "unlockContent",
+      "contentId": "mat-ch02-shen-register"
+    }
+  ],
+  "contentIds": [
+    "mat-ch02-xiaolu-register",
+    "mat-ch02-shen-register",
+    "mat-ch02-restoration-request",
+    "mat-ch02-will-conditions",
+    "mat-ch02-qihu-photo-front",
+    "mat-ch02-qihu-photo-back",
+    "mat-ch02-qihu-archive-index",
+    "mat-ch02-identity-authorization",
+    "mat-ch02-wen-medical-fragment",
+    "mat-ch02-inventory-photo-1829",
+    "mat-ch02-inventory-photo-1838",
+    "mat-ch02-transfer-appendix-index",
+    "mat-ch02-spare-supply-receipt",
+    "mat-ch02-child-audio-fragment"
+  ],
+  "dialogueIds": [
+    "dialogue-ch02-yishu-identity-choice",
+    "dialogue-ch02-he-authorization-boundary"
+  ],
+  "reasoningIds": [],
+  "nextChapterId": "chapter-03"
+}

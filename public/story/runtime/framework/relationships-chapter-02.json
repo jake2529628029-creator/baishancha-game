@@ -1,0 +1,156 @@
+{
+  "characters": [
+    {
+      "id": "shen-yishu",
+      "name": "沈意舒",
+      "role": "沈家次女／身份资料申请人"
+    },
+    {
+      "id": "shen-ciyun",
+      "name": "沈慈云",
+      "role": "静园主人／沈意舒的法定母亲"
+    },
+    {
+      "id": "shen-yizhen",
+      "name": "沈仪真",
+      "role": "沈家长女／沈意舒社会身份中的姐姐"
+    },
+    {
+      "id": "he-qinghe",
+      "name": "何清和",
+      "role": "沈家法律顾问"
+    },
+    {
+      "id": "wen-rusu",
+      "name": "温如素",
+      "role": "沈家家庭医生"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "relationship-ch02-ciyun-yishu-legal-family",
+      "fromCharacterId": "shen-ciyun",
+      "toCharacterId": "shen-yishu",
+      "type": "family",
+      "label": "社会母女／法定母女",
+      "initialDimensions": {
+        "understanding": "suspected",
+        "hidden_information": "suspected"
+      },
+      "revealCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-two-names-one-person"
+      }
+    },
+    {
+      "id": "relationship-ch02-ciyun-yishu-qihu-rescue",
+      "fromCharacterId": "shen-ciyun",
+      "toCharacterId": "shen-yishu",
+      "type": "protects",
+      "label": "十二年前真实救援",
+      "initialDimensions": {
+        "understanding": "suspected",
+        "hidden_information": "suspected"
+      },
+      "revealCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-two-names-one-person"
+      }
+    },
+    {
+      "id": "relationship-ch02-ciyun-yishu-identity-control",
+      "fromCharacterId": "shen-ciyun",
+      "toCharacterId": "shen-yishu",
+      "type": "controls",
+      "label": "成年后的身份控制",
+      "initialDimensions": {
+        "understanding": "suspected",
+        "hidden_information": "suspected"
+      },
+      "revealCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-rescue-has-expiry"
+      }
+    },
+    {
+      "id": "relationship-ch02-yishu-ciyun-choice-conflict",
+      "fromCharacterId": "shen-yishu",
+      "toCharacterId": "shen-ciyun",
+      "type": "conflicts",
+      "label": "身份选择权冲突",
+      "initialDimensions": {
+        "understanding": "suspected",
+        "hidden_information": "confirmed"
+      },
+      "revealCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-rescue-has-expiry"
+      }
+    },
+    {
+      "id": "relationship-ch02-he-yishu-sealed-records",
+      "fromCharacterId": "he-qinghe",
+      "toCharacterId": "shen-yishu",
+      "type": "withholds",
+      "label": "身份资料封存与隐瞒",
+      "initialDimensions": {
+        "trust": "unknown",
+        "understanding": "questioned",
+        "hidden_information": "suspected"
+      },
+      "revealCondition": {
+        "type": "dialogueCompleted",
+        "dialogueId": "dialogue-ch02-he-authorization-boundary"
+      }
+    },
+    {
+      "id": "relationship-ch02-wen-yishu-medical-opinion",
+      "fromCharacterId": "wen-rusu",
+      "toCharacterId": "shen-yishu",
+      "type": "withholds",
+      "label": "医疗意见被长期沿用",
+      "initialDimensions": {
+        "understanding": "questioned",
+        "hidden_information": "suspected"
+      },
+      "revealCondition": {
+        "type": "contentViewed",
+        "contentId": "mat-ch02-wen-medical-fragment"
+      }
+    },
+    {
+      "id": "relationship-ch02-yizhen-yishu-biological-cousin",
+      "fromCharacterId": "shen-yizhen",
+      "toCharacterId": "shen-yishu",
+      "type": "family",
+      "label": "生物学上的表姐",
+      "initialDimensions": {
+        "understanding": "suspected",
+        "hidden_information": "suspected"
+      },
+      "revealCondition": {
+        "type": "detectivePropositionCompleted",
+        "boardId": "board-ch02-identity",
+        "propositionId": "proposition-ch02-two-names-one-person"
+      }
+    },
+    {
+      "id": "relationship-ch02-yizhen-yishu-social-sister",
+      "fromCharacterId": "shen-yizhen",
+      "toCharacterId": "shen-yishu",
+      "type": "family",
+      "label": "社会身份中的姐姐",
+      "initialDimensions": {
+        "understanding": "confirmed",
+        "hidden_information": "unknown"
+      },
+      "revealCondition": {
+        "type": "always"
+      }
+    }
+  ]
+}

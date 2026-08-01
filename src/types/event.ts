@@ -1,4 +1,8 @@
 import type { PrimitiveFlag } from "./story";
+import type {
+  RelationshipDimension,
+  RelationshipInsightState
+} from "./relationship";
 
 export type GameEvent =
   | {
@@ -37,6 +41,28 @@ export type GameEvent =
   | {
       type: "completeObjective";
       objectiveId: string;
+    }
+  | {
+      type: "updateRelationship";
+      relationshipId: string;
+      dimension: RelationshipDimension;
+      state: RelationshipInsightState;
+    }
+  | {
+      type: "recordTimelineOrder";
+      puzzleId: string;
+      orderedEventIds: string[];
+      matched: boolean;
+      solutionId: string | null;
+    }
+  | {
+      type: "completeTimelinePuzzle";
+      puzzleId: string;
+    }
+  | {
+      type: "completeDetectiveProposition";
+      boardId: string;
+      propositionId: string;
     }
   | {
       type: "setFlag";

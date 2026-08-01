@@ -1,0 +1,170 @@
+[
+  {
+    "id": "evidence-ch02-dual-identity-records",
+    "chapterId": "chapter-02",
+    "title": "相互冲突的两套身份记录",
+    "category": "document",
+    "description": "沈小鹿的旧记录停止使用，沈意舒的新记录随后出现，出生与监护资料链存在结构性断点；现阶段不能仅凭记录确认两者为同一人。",
+    "sourceContentIds": [
+      "mat-ch02-xiaolu-register",
+      "mat-ch02-shen-register"
+    ],
+    "observationIds": [
+      "obs-ch02-xiaolu-record-exists",
+      "obs-ch02-shen-record-created-later",
+      "obs-ch02-register-conflict"
+    ],
+    "collectCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-xiaolu-record-exists"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-shen-record-created-later"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-register-conflict"
+        }
+      ]
+    }
+  },
+  {
+    "id": "evidence-ch02-qihu-rescue-photo",
+    "chapterId": "chapter-02",
+    "title": "栖湖地点与保护行为照片",
+    "category": "physical",
+    "description": "照片能够把画面定位至栖湖，并显示一名成年女性曾以身体保护受惊儿童；这不能证明后续长期控制具有正当性。",
+    "sourceContentIds": ["mat-ch02-qihu-photo-front"],
+    "observationIds": [
+      "obs-ch02-photo-protected-child",
+      "obs-ch02-photo-qihu-location",
+      "obs-ch02-photo-cropped-edge"
+    ],
+    "collectCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-photo-protected-child"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-photo-qihu-location"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-photo-cropped-edge"
+        }
+      ]
+    }
+  },
+  {
+    "id": "evidence-ch02-sealed-qihu-archive",
+    "chapterId": "chapter-02",
+    "title": "未被销毁的栖湖封存档案",
+    "category": "document",
+    "description": "连续目录证明栖湖旧案的现场、医疗、身份保护和未成年人陈述资料仍被封存，而非已经销毁或遗失。",
+    "sourceContentIds": ["mat-ch02-qihu-archive-index"],
+    "observationIds": [
+      "obs-ch02-archive-four-categories",
+      "obs-ch02-files-indexed-not-destroyed"
+    ],
+    "collectCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-archive-four-categories"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-files-indexed-not-destroyed"
+        }
+      ]
+    }
+  },
+  {
+    "id": "evidence-ch02-identity-authorization",
+    "chapterId": "chapter-02",
+    "title": "声称依据儿童意愿的授权文件",
+    "category": "document",
+    "description": "文件声称保护安排符合儿童当时意愿，但关键询问页缺失，不能证明该意愿真实、完整、有效或构成永久授权。",
+    "sourceContentIds": ["mat-ch02-identity-authorization"],
+    "observationIds": [
+      "obs-ch02-authorization-wording",
+      "obs-ch02-authorization-context-missing"
+    ],
+    "collectCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-authorization-wording"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-authorization-context-missing"
+        }
+      ]
+    }
+  },
+  {
+    "id": "evidence-ch02-adult-restoration-request",
+    "chapterId": "chapter-02",
+    "title": "未执行的成年身份资料申请",
+    "category": "document",
+    "description": "成年沈意舒曾要求调阅封存资料并重新决定身份使用方式；申请被撤回且缺少本人确认，现有文件不能确认是谁促成撤回。",
+    "sourceContentIds": ["mat-ch02-restoration-request"],
+    "observationIds": [
+      "obs-ch02-restoration-signed",
+      "obs-ch02-restoration-purpose",
+      "obs-ch02-restoration-withdrawn"
+    ],
+    "collectCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-restoration-signed"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-restoration-purpose"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-restoration-withdrawn"
+        }
+      ]
+    }
+  },
+  {
+    "id": "evidence-ch02-protection-conditions",
+    "chapterId": "chapter-02",
+    "title": "与服从条件绑定的生活保障",
+    "category": "document",
+    "description": "遗嘱条款把居住、照护与生活费用同指定评估、保护性居住和身份资料保管条件绑定，证明保护安排已经包含限制性后果。",
+    "sourceContentIds": ["mat-ch02-will-conditions"],
+    "observationIds": [
+      "obs-ch02-will-treatment-condition",
+      "obs-ch02-safety-bound-to-obedience"
+    ],
+    "collectCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-will-treatment-condition"
+        },
+        {
+          "type": "observationDiscovered",
+          "observationId": "obs-ch02-safety-bound-to-obedience"
+        }
+      ]
+    }
+  }
+]

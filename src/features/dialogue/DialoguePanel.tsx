@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
 import { useGameStore } from "../../stores/game-store";
-import type { DialogueLine } from "../../types/dialogue";
+import type { DialogueLine, DialogueNode } from "../../types/dialogue";
+
+type DialoguePanelDisplaySource =
+  | Partial<Pick<DialogueNode, "characterName" | "topic">>
+  | null
+  | undefined;
+
+export function getDialoguePanelDisplay(
+  dialogue: DialoguePanelDisplaySource
+) {
+  return {
+    characterName: dialogue?.characterName?.trim() || "待确认人物",
+    topic: dialogue?.topic?.trim() || "未命名话题"
+  };
+}
 
 export function DialoguePanel() {
   const story = useGameStore((state) => state.story);
@@ -28,6 +42,7 @@ export function DialoguePanel() {
       : availableIds[0] ?? null;
   const dialogue =
     story && resolvedDialogueId ? story.dialogues[resolvedDialogueId] : null;
+  const dialogueDisplay = getDialoguePanelDisplay(dialogue);
 
   useEffect(() => {
     setSelectedEvidenceIds([]);
@@ -44,12 +59,14 @@ export function DialoguePanel() {
       <header className="stage-heading">
         <div>
           <p className="section-label">人物询问</p>
-          <h2>沈意舒</h2>
+          <h2>{dialogueDisplay.characterName}</h2>
         </div>
         <span>{availableIds.length} 个话题已解锁</span>
       </header>
       <p className="scene-description">
-        她愿意回答问题，但不会替你补全证据之间缺失的逻辑。
+        {dialogue
+          ? `当前话题：${dialogueDisplay.topic}`
+          : "选择已解锁的话题，再决定要出示哪些证据。"}
       </p>
 
       {availableIds.length ? (
@@ -65,7 +82,7 @@ export function DialoguePanel() {
                 <span>
                   {completedDialogueIds.includes(id) ? "已询问" : "新话题"}
                 </span>
-                {story.dialogues[id].topic}
+                {getDialoguePanelDisplay(story.dialogues[id]).topic}
               </button>
             ))}
           </nav>
@@ -77,7 +94,7 @@ export function DialoguePanel() {
                   <blockquote key={`${line.speakerId}-${index}`}>
                     <span>
                       {line.speakerId === dialogue.characterId
-                        ? dialogue.characterName
+                        ? dialogueDisplay.characterName
                         : "调查者"}
                     </span>
                     {line.text}
@@ -90,7 +107,7 @@ export function DialoguePanel() {
                   >
                     <span>
                       {line.speakerId === dialogue.characterId
-                        ? dialogue.characterName
+                        ? dialogueDisplay.characterName
                         : "调查者"}
                     </span>
                     {line.text}
@@ -155,7 +172,7 @@ export function DialoguePanel() {
         <section className="viewer-placeholder">
           <p className="section-label">暂无话题</p>
           <h3>先从调查材料中建立可质询的事实</h3>
-          <p>新的观察与证据会解锁沈意舒的对应话题。</p>
+          <p>新的观察与证据会解锁对应人物的话题。</p>
         </section>
       )}
     </section>

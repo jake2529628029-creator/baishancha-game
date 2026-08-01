@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://white-camellia.local/schemas/detective-board.schema.json",
+  "title": "White Camellia Detective Board Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["boards"],
+  "properties": {
+    "boards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "chapterId",
+          "title",
+          "cards",
+          "initialConnections",
+          "propositions"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "chapterId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/card"
+            }
+          },
+          "initialConnections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/connection"
+            }
+          },
+          "propositions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/proposition"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "referenceId", "title", "revealCondition"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": ["character", "evidence", "timeline", "proposition"]
+        },
+        "referenceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revealCondition": {
+          "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/condition"
+        }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "fromCardId",
+        "toCardId",
+        "relationType"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fromCardId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "toCardId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "connectionRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromCardId", "toCardId", "relationType"],
+      "properties": {
+        "fromCardId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "toCardId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationType": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "proposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "prompt",
+        "entryCondition",
+        "solutions",
+        "incorrectFeedback"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entryCondition": {
+          "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/condition"
+        },
+        "solutions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "requiredConnections", "onSolvedEvents"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requiredConnections": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/definitions/connectionRequirement"
+                }
+              },
+              "onSolvedEvents": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/event"
+                }
+              }
+            }
+          }
+        },
+        "incorrectFeedback": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

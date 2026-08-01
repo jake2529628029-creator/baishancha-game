@@ -107,6 +107,99 @@ export function runEvent(
             completedObjectiveIds: next
           };
     }
+    case "updateRelationship": {
+      const relationship = state.relationshipStates[event.relationshipId] ?? {};
+      const previousState = relationship[event.dimension] ?? null;
+
+      if (previousState === event.state) {
+        return state;
+      }
+
+      return {
+        ...state,
+        relationshipStates: {
+          ...state.relationshipStates,
+          [event.relationshipId]: {
+            ...relationship,
+            [event.dimension]: event.state
+          }
+        },
+        relationshipHistory: [
+          ...state.relationshipHistory,
+          {
+            sequence: state.relationshipHistory.length + 1,
+            relationshipId: event.relationshipId,
+            dimension: event.dimension,
+            previousState,
+            nextState: event.state
+          }
+        ]
+      };
+    }
+    case "recordTimelineOrder": {
+      const previousOrder = state.timelineOrders[event.puzzleId];
+      const sameOrder =
+        previousOrder?.length === event.orderedEventIds.length &&
+        previousOrder.every(
+          (eventId, index) => eventId === event.orderedEventIds[index]
+        );
+      const attempt = {
+        puzzleId: event.puzzleId,
+        orderedEventIds: [...event.orderedEventIds],
+        matched: event.matched,
+        solutionId: event.solutionId
+      };
+
+      return {
+        ...state,
+        timelineOrders: sameOrder
+          ? state.timelineOrders
+          : {
+              ...state.timelineOrders,
+              [event.puzzleId]: [...event.orderedEventIds]
+            },
+        timelineAttempts: [...state.timelineAttempts, attempt]
+      };
+    }
+    case "completeTimelinePuzzle": {
+      const completedTimelinePuzzleIds = appendUnique(
+        state.completedTimelinePuzzleIds,
+        event.puzzleId
+      );
+
+      return completedTimelinePuzzleIds === state.completedTimelinePuzzleIds
+        ? state
+        : {
+            ...state,
+            completedTimelinePuzzleIds
+          };
+    }
+    case "completeDetectiveProposition": {
+      const board = state.detectiveBoardStates[event.boardId] ?? {
+        placements: [],
+        connections: [],
+        solvedPropositionIds: []
+      };
+      const solvedPropositionIds = appendUnique(
+        board.solvedPropositionIds,
+        event.propositionId
+      );
+
+      if (solvedPropositionIds === board.solvedPropositionIds) {
+        return state;
+      }
+
+      return {
+        ...state,
+        detectiveBoardStates: {
+          ...state.detectiveBoardStates,
+          [event.boardId]: {
+            ...board,
+            solvedPropositionIds
+          }
+        }
+      };
+    }
     case "setFlag": {
       if (state.flags[event.flagId] === event.value) {
         return state;

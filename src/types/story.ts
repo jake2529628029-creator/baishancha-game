@@ -38,6 +38,21 @@ export type StoryCondition =
       objectiveId: string;
     }
   | {
+      type: "relationshipStateEquals";
+      relationshipId: string;
+      dimension: import("./relationship").RelationshipDimension;
+      state: import("./relationship").RelationshipInsightState;
+    }
+  | {
+      type: "timelineCompleted";
+      puzzleId: string;
+    }
+  | {
+      type: "detectivePropositionCompleted";
+      boardId: string;
+      propositionId: string;
+    }
+  | {
       type: "all" | "any";
       conditions: StoryCondition[];
     }
@@ -53,14 +68,34 @@ export interface StoryManifest {
   title: string;
   subtitle?: string;
   startChapterId: string;
-  chapterIds: string[];
+  chapterManifestFile: string;
   dataFiles: {
     content: string[];
     observations: string[];
     evidence: string[];
     dialogues: string[];
     reasoning: string[];
+    relationships: string[];
+    timelines: string[];
+    detectiveBoards: string[];
   };
+}
+
+export type ChapterAvailability = "available" | "planned";
+
+export interface ChapterManifestEntry {
+  id: string;
+  order: number;
+  title: string;
+  subtitle?: string;
+  availability: ChapterAvailability;
+  chapterFile: string | null;
+  unlockCondition: StoryCondition;
+}
+
+export interface ChapterManifest {
+  schemaVersion: number;
+  chapters: ChapterManifestEntry[];
 }
 
 export interface ChapterObjective {
@@ -120,10 +155,22 @@ export interface StoryChapter {
 
 export interface LoadedStory {
   manifest: StoryManifest;
+  chapterManifest: ChapterManifest;
   chapters: Record<string, StoryChapter>;
   content: Record<string, import("./content").ContentItem>;
   observations: Record<string, import("./observation").Observation>;
   evidence: Record<string, import("./evidence").Evidence>;
   dialogues: Record<string, import("./dialogue").DialogueNode>;
   reasoning: Record<string, import("./reasoning").ReasoningNode>;
+  characters: Record<string, import("./relationship").CharacterNode>;
+  relationships: Record<
+    string,
+    import("./relationship").RelationshipDefinition
+  >;
+  timelineEvents: Record<string, import("./timeline").TimelineEventDefinition>;
+  timelinePuzzles: Record<string, import("./timeline").TimelinePuzzleDefinition>;
+  detectiveBoards: Record<
+    string,
+    import("./detective-board").DetectiveBoardDefinition
+  >;
 }

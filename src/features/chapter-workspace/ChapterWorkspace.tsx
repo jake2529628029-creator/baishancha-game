@@ -8,13 +8,19 @@ import { ReasoningPanel } from "../reasoning/ReasoningPanel";
 import { ChapterResult } from "../chapter-result/ChapterResult";
 import { DetectiveJournal } from "../detective-journal/DetectiveJournal";
 import { EvidenceConnections } from "../evidence-connections/EvidenceConnections";
+import { RelationshipGraph } from "../relationship-graph/RelationshipGraph";
+import { TimelineBoard } from "../timeline-board/TimelineBoard";
+import { DetectiveBoard } from "../detective-board/DetectiveBoard";
 
 type WorkspaceMode =
   | "investigation"
   | "dialogue"
   | "reasoning"
   | "journal"
-  | "connections";
+  | "connections"
+  | "relationships"
+  | "timeline"
+  | "detective-board";
 
 function ProgressMark({ complete }: { complete: boolean }) {
   return (
@@ -70,12 +76,22 @@ export function ChapterWorkspace() {
     setSelectedContentId(contentId);
     setWorkspaceMode("investigation");
   };
+  const isWideTool =
+    workspaceMode === "relationships" ||
+    workspaceMode === "timeline" ||
+    workspaceMode === "detective-board";
+  const manifestEntry = story.chapterManifest.chapters.find(
+    (item) => item.id === chapter.id
+  );
 
   return (
     <main className="workspace-shell">
       <header className="workspace-header">
         <div>
-          <p className="eyebrow">第一章 · {chapter.title}</p>
+          <p className="eyebrow">
+            {manifestEntry?.subtitle ?? `第${manifestEntry?.order ?? chapter.order}章`} ·{" "}
+            {chapter.title}
+          </p>
           <h1>静园调查工作台</h1>
         </div>
         <nav className="workspace-mode-nav" aria-label="游戏功能">
@@ -111,6 +127,27 @@ export function ChapterWorkspace() {
             线索链
           </button>
           <button
+            className={workspaceMode === "relationships" ? "is-active" : ""}
+            type="button"
+            onClick={() => setWorkspaceMode("relationships")}
+          >
+            关系
+          </button>
+          <button
+            className={workspaceMode === "timeline" ? "is-active" : ""}
+            type="button"
+            onClick={() => setWorkspaceMode("timeline")}
+          >
+            时间线
+          </button>
+          <button
+            className={workspaceMode === "detective-board" ? "is-active" : ""}
+            type="button"
+            onClick={() => setWorkspaceMode("detective-board")}
+          >
+            侦探墙
+          </button>
+          <button
             className={workspaceMode === "reasoning" ? "is-active" : ""}
             type="button"
             onClick={() => setWorkspaceMode("reasoning")}
@@ -129,8 +166,8 @@ export function ChapterWorkspace() {
         </div>
       </header>
 
-      <div className="workspace-grid">
-        <aside className="workspace-rail">
+      <div className={`workspace-grid${isWideTool ? " workspace-grid--wide-tool" : ""}`}>
+        <aside className="workspace-rail" aria-hidden={isWideTool || undefined}>
           <section className="rail-section">
             <p className="section-label">调查地点</p>
             <nav className="scene-nav" aria-label="调查地点">
@@ -179,6 +216,12 @@ export function ChapterWorkspace() {
             <DetectiveJournal />
           ) : workspaceMode === "connections" ? (
             <EvidenceConnections onOpenContent={openContent} />
+          ) : workspaceMode === "relationships" ? (
+            <RelationshipGraph />
+          ) : workspaceMode === "timeline" ? (
+            <TimelineBoard />
+          ) : workspaceMode === "detective-board" ? (
+            <DetectiveBoard />
           ) : (
             <>
               <div className="stage-heading">
@@ -231,7 +274,7 @@ export function ChapterWorkspace() {
           )}
         </section>
 
-        <aside className="case-sidebar">
+        <aside className="case-sidebar" aria-hidden={isWideTool || undefined}>
           <InvestigationNotebook onOpenContent={openContent} />
 
           <section className="case-panel">

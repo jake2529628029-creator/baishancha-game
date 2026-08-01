@@ -1,0 +1,296 @@
+{
+  "boards": [
+    {
+      "id": "board-ch02-identity",
+      "chapterId": "chapter-02",
+      "title": "不存在的女儿：身份调查墙",
+      "cards": [
+        {
+          "id": "card-ch02-character-shen-ciyun",
+          "type": "character",
+          "referenceId": "shen-ciyun",
+          "title": "沈慈云",
+          "revealCondition": {
+            "type": "always"
+          }
+        },
+        {
+          "id": "card-ch02-character-shen-yishu",
+          "type": "character",
+          "referenceId": "shen-yishu",
+          "title": "沈意舒",
+          "revealCondition": {
+            "type": "always"
+          }
+        },
+        {
+          "id": "card-ch02-e10-dual-identity-records",
+          "type": "evidence",
+          "referenceId": "evidence-ch02-dual-identity-records",
+          "title": "相互冲突的两套身份记录",
+          "revealCondition": {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-ch02-dual-identity-records"
+          }
+        },
+        {
+          "id": "card-ch02-e11-qihu-rescue-photo",
+          "type": "evidence",
+          "referenceId": "evidence-ch02-qihu-rescue-photo",
+          "title": "栖湖地点与保护行为照片",
+          "revealCondition": {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-ch02-qihu-rescue-photo"
+          }
+        },
+        {
+          "id": "card-ch02-e12-sealed-qihu-archive",
+          "type": "evidence",
+          "referenceId": "evidence-ch02-sealed-qihu-archive",
+          "title": "未被销毁的栖湖封存档案",
+          "revealCondition": {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-ch02-sealed-qihu-archive"
+          }
+        },
+        {
+          "id": "card-ch02-e14-adult-restoration-request",
+          "type": "evidence",
+          "referenceId": "evidence-ch02-adult-restoration-request",
+          "title": "未执行的成年身份资料申请",
+          "revealCondition": {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-ch02-adult-restoration-request"
+          }
+        },
+        {
+          "id": "card-ch02-e15-protection-conditions",
+          "type": "evidence",
+          "referenceId": "evidence-ch02-protection-conditions",
+          "title": "与服从条件绑定的生活保障",
+          "revealCondition": {
+            "type": "evidenceCollected",
+            "evidenceId": "evidence-ch02-protection-conditions"
+          }
+        },
+        {
+          "id": "card-ch02-proposition-two-names-one-person",
+          "type": "proposition",
+          "referenceId": "proposition-ch02-two-names-one-person",
+          "title": "两个名字，一个人？",
+          "revealCondition": {
+            "type": "all",
+            "conditions": [
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-dual-identity-records"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-qihu-rescue-photo"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-sealed-qihu-archive"
+              }
+            ]
+          }
+        },
+        {
+          "id": "card-ch02-proposition-rescue-has-expiry",
+          "type": "proposition",
+          "referenceId": "proposition-ch02-rescue-has-expiry",
+          "title": "救援有期限吗？",
+          "revealCondition": {
+            "type": "all",
+            "conditions": [
+              {
+                "type": "detectivePropositionCompleted",
+                "boardId": "board-ch02-identity",
+                "propositionId": "proposition-ch02-two-names-one-person"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-adult-restoration-request"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-protection-conditions"
+              },
+              {
+                "type": "dialogueCompleted",
+                "dialogueId": "dialogue-ch02-yishu-identity-choice"
+              },
+              {
+                "type": "dialogueCompleted",
+                "dialogueId": "dialogue-ch02-he-authorization-boundary"
+              },
+              {
+                "type": "objectiveCompleted",
+                "objectiveId": "objective-ch02-investigate-appendices"
+              }
+            ]
+          }
+        }
+      ],
+      "initialConnections": [],
+      "propositions": [
+        {
+          "id": "proposition-ch02-two-names-one-person",
+          "title": "两个名字，一个人？",
+          "prompt": "用身份记录、栖湖照片和封存目录，判断两个名字与十二年前事件之间的关系。",
+          "entryCondition": {
+            "type": "all",
+            "conditions": [
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-dual-identity-records"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-qihu-rescue-photo"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-sealed-qihu-archive"
+              }
+            ]
+          },
+          "solutions": [
+            {
+              "id": "solution-ch02-two-names-one-person",
+              "requiredConnections": [
+                {
+                  "fromCardId": "card-ch02-e10-dual-identity-records",
+                  "toCardId": "card-ch02-proposition-two-names-one-person",
+                  "relationType": "supports"
+                },
+                {
+                  "fromCardId": "card-ch02-e11-qihu-rescue-photo",
+                  "toCardId": "card-ch02-proposition-two-names-one-person",
+                  "relationType": "supports"
+                },
+                {
+                  "fromCardId": "card-ch02-e12-sealed-qihu-archive",
+                  "toCardId": "card-ch02-proposition-two-names-one-person",
+                  "relationType": "supports"
+                }
+              ],
+              "onSolvedEvents": [
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-ciyun-yishu-qihu-rescue",
+                  "dimension": "understanding",
+                  "state": "confirmed"
+                },
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-ciyun-yishu-legal-family",
+                  "dimension": "understanding",
+                  "state": "reinterpreted"
+                },
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-ciyun-yishu-legal-family",
+                  "dimension": "hidden_information",
+                  "state": "confirmed"
+                },
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-yizhen-yishu-biological-cousin",
+                  "dimension": "understanding",
+                  "state": "confirmed"
+                },
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-yizhen-yishu-biological-cousin",
+                  "dimension": "hidden_information",
+                  "state": "confirmed"
+                }
+              ]
+            }
+          ],
+          "incorrectFeedback": "现有连线还没有同时解释身份记录的断点、栖湖地点与封存档案之间的联系。"
+        },
+        {
+          "id": "proposition-ch02-rescue-has-expiry",
+          "title": "救援有期限吗？",
+          "prompt": "区分十二年前真实发生的救援，与成年后仍在持续的身份限制。",
+          "entryCondition": {
+            "type": "all",
+            "conditions": [
+              {
+                "type": "detectivePropositionCompleted",
+                "boardId": "board-ch02-identity",
+                "propositionId": "proposition-ch02-two-names-one-person"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-adult-restoration-request"
+              },
+              {
+                "type": "evidenceCollected",
+                "evidenceId": "evidence-ch02-protection-conditions"
+              },
+              {
+                "type": "dialogueCompleted",
+                "dialogueId": "dialogue-ch02-yishu-identity-choice"
+              },
+              {
+                "type": "dialogueCompleted",
+                "dialogueId": "dialogue-ch02-he-authorization-boundary"
+              },
+              {
+                "type": "objectiveCompleted",
+                "objectiveId": "objective-ch02-investigate-appendices"
+              }
+            ]
+          },
+          "solutions": [
+            {
+              "id": "solution-ch02-rescue-has-expiry",
+              "requiredConnections": [
+                {
+                  "fromCardId": "card-ch02-e11-qihu-rescue-photo",
+                  "toCardId": "card-ch02-proposition-rescue-has-expiry",
+                  "relationType": "supports"
+                },
+                {
+                  "fromCardId": "card-ch02-e14-adult-restoration-request",
+                  "toCardId": "card-ch02-proposition-rescue-has-expiry",
+                  "relationType": "contradicts"
+                },
+                {
+                  "fromCardId": "card-ch02-e15-protection-conditions",
+                  "toCardId": "card-ch02-proposition-rescue-has-expiry",
+                  "relationType": "supports"
+                }
+              ],
+              "onSolvedEvents": [
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-ciyun-yishu-identity-control",
+                  "dimension": "understanding",
+                  "state": "confirmed"
+                },
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-ciyun-yishu-identity-control",
+                  "dimension": "hidden_information",
+                  "state": "confirmed"
+                },
+                {
+                  "type": "updateRelationship",
+                  "relationshipId": "relationship-ch02-yishu-ciyun-choice-conflict",
+                  "dimension": "understanding",
+                  "state": "confirmed"
+                }
+              ]
+            }
+          ],
+          "incorrectFeedback": "这些连线还没有同时保留“救援真实”和“成年选择仍被限制”两个事实。"
+        }
+      ]
+    }
+  ]
+}

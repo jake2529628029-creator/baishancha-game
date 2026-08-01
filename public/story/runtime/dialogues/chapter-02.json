@@ -1,0 +1,144 @@
+[
+  {
+    "id": "dialogue-ch02-yishu-identity-choice",
+    "chapterId": "chapter-02",
+    "characterId": "shen-yishu",
+    "characterName": "沈意舒",
+    "topic": "我申请的不是一个答案",
+    "entryCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "detectivePropositionCompleted",
+          "boardId": "board-ch02-identity",
+          "propositionId": "proposition-ch02-two-names-one-person"
+        },
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-ch02-adult-restoration-request"
+        }
+      ]
+    },
+    "openingLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "我申请的不是一个答案。我申请的是先看到原始资料。"
+      }
+    ],
+    "evidenceResponses": [
+      {
+        "id": "response-ch02-yishu-adult-request",
+        "acceptedEvidenceIds": [
+          "evidence-ch02-adult-restoration-request"
+        ],
+        "lines": [
+          {
+            "speakerId": "shen-yishu",
+            "text": "对。我要先知道发生过什么，再由我决定今后怎么使用自己的身份。"
+          },
+          {
+            "speakerId": "shen-yishu",
+            "text": "我没有要求你替我选沈小鹿或沈意舒。名字属于我，不是调查者必须替我填上的答案。"
+          },
+          {
+            "speakerId": "shen-yishu",
+            "text": "撤回栏不是我填的，我也没有在确认处签名。但在看到更多材料之前，我不会指认是谁撤回了申请。"
+          }
+        ],
+        "events": []
+      }
+    ],
+    "fallbackLines": [
+      {
+        "speakerId": "shen-yishu",
+        "text": "这组材料没有说明我成年后申请了什么。先找到那份由我签字的申请。"
+      }
+    ],
+    "completionEvents": [
+      {
+        "type": "completeDialogue",
+        "dialogueId": "dialogue-ch02-yishu-identity-choice"
+      }
+    ]
+  },
+  {
+    "id": "dialogue-ch02-he-authorization-boundary",
+    "chapterId": "chapter-02",
+    "characterId": "he-qinghe",
+    "characterName": "何清和",
+    "topic": "当时的授权",
+    "entryCondition": {
+      "type": "all",
+      "conditions": [
+        {
+          "type": "detectivePropositionCompleted",
+          "boardId": "board-ch02-identity",
+          "propositionId": "proposition-ch02-two-names-one-person"
+        },
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-ch02-identity-authorization"
+        },
+        {
+          "type": "evidenceCollected",
+          "evidenceId": "evidence-ch02-adult-restoration-request"
+        }
+      ]
+    },
+    "openingLines": [
+      {
+        "speakerId": "he-qinghe",
+        "text": "当年的手续是在真实安全风险下启动的。你要问的，应该是它还能不能替今天作决定。"
+      }
+    ],
+    "evidenceResponses": [
+      {
+        "id": "response-ch02-he-authorization-scope",
+        "acceptedEvidenceIds": [
+          "evidence-ch02-identity-authorization",
+          "evidence-ch02-adult-restoration-request"
+        ],
+        "lines": [
+          {
+            "speakerId": "he-qinghe",
+            "text": "当年确实存在安全风险，文件也确实这样记载。但记录询问过程的前置页面不在当前抄件里。"
+          },
+          {
+            "speakerId": "he-qinghe",
+            "text": "我能确认成年后的申请没有得到充分处理。凭这两份文件，我无法证明儿童时期授权的完整范围，更无法证明它可以持续到成年。"
+          },
+          {
+            "speakerId": "he-qinghe",
+            "text": "撤回栏本身不能告诉你，最终是谁替申请人作了决定。"
+          }
+        ],
+        "events": [
+          {
+            "type": "updateRelationship",
+            "relationshipId": "relationship-ch02-he-yishu-sealed-records",
+            "dimension": "hidden_information",
+            "state": "confirmed"
+          },
+          {
+            "type": "updateRelationship",
+            "relationshipId": "relationship-ch02-he-yishu-sealed-records",
+            "dimension": "trust",
+            "state": "questioned"
+          }
+        ]
+      }
+    ],
+    "fallbackLines": [
+      {
+        "speakerId": "he-qinghe",
+        "text": "单独一份文件只能证明它写了什么。要谈授权边界，必须同时看当年的授权和成年后的申请。"
+      }
+    ],
+    "completionEvents": [
+      {
+        "type": "completeDialogue",
+        "dialogueId": "dialogue-ch02-he-authorization-boundary"
+      }
+    ]
+  }
+]

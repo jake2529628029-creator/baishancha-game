@@ -4,12 +4,21 @@ import {
   discoverObservation as discoverChapterObservation,
   dispatchChapterEvents,
   enterChapter,
+  synchronizeChapterUnlocks,
   synchronizeChapter,
   viewContent as viewChapterContent
 } from "../engine/chapter-engine/chapter-engine";
+import {
+  connectDetectiveCards,
+  disconnectDetectiveCards,
+  placeDetectiveCard,
+  submitDetectiveProposition as runDetectiveProposition
+} from "../engine/detective-board/detective-board";
 import { presentDialogueEvidence as runDialogueEvidence } from "../engine/dialogue-engine/dialogue-engine";
 import { submitReasoning as runReasoning } from "../engine/reasoning-engine/reasoning-engine";
+import { updateRelationship as runRelationshipUpdate } from "../engine/relationship-engine/relationship-engine";
 import { loadStory } from "../engine/story-loader/story-loader";
+import { submitTimelineOrder as runTimelineOrder } from "../engine/timeline-engine/timeline-engine";
 import {
   AUTO_SAVE_ID,
   SAVE_VERSION,
@@ -18,7 +27,15 @@ import {
   writeAutoSave
 } from "../persistence/repositories/save-repository";
 import type { GameEvent } from "../types/event";
+import type {
+  DetectiveBoardAttempt,
+  DetectiveBoardConnection
+} from "../types/detective-board";
 import type { DialogueAttempt } from "../types/dialogue";
+import type {
+  RelationshipDimension,
+  RelationshipInsightState
+} from "../types/relationship";
 import type { ReasoningAttempt } from "../types/reasoning";
 import {
   createEmptyProgress,
@@ -26,6 +43,7 @@ import {
 } from "../types/progress";
 import type { GameSaveRecord } from "../types/save";
 import type { LoadedStory, PrimitiveFlag } from "../types/story";
+import type { TimelineAttempt } from "../types/timeline";
 
 type GameStatus = "idle" | "loading" | "ready" | "error";
 
@@ -38,6 +56,7 @@ interface GameStore extends GameProgressState {
   bootstrap: () => Promise<void>;
   startNewGame: () => Promise<void>;
   continueGame: () => Promise<void>;
+  openChapter: (chapterId: string) => Promise<void>;
   applyEvents: (events: GameEvent[]) => Promise<void>;
   viewContent: (contentId: string) => Promise<void>;
   discoverObservation: (observationId: string) => Promise<void>;
@@ -50,6 +69,33 @@ interface GameStore extends GameProgressState {
     evidenceIds: string[]
   ) => Promise<ReasoningAttempt | null>;
   setFlag: (flagId: string, value: PrimitiveFlag) => Promise<void>;
+  setRelationshipInsight: (
+    relationshipId: string,
+    dimension: RelationshipDimension,
+    value: RelationshipInsightState
+  ) => Promise<void>;
+  submitTimelineOrder: (
+    puzzleId: string,
+    orderedEventIds: string[]
+  ) => Promise<(TimelineAttempt & { feedback: string }) | null>;
+  placeDetectiveCard: (
+    boardId: string,
+    cardId: string,
+    x: number,
+    y: number
+  ) => Promise<void>;
+  connectDetectiveCards: (
+    boardId: string,
+    connection: DetectiveBoardConnection
+  ) => Promise<void>;
+  disconnectDetectiveCards: (
+    boardId: string,
+    connectionId: string
+  ) => Promise<void>;
+  submitDetectiveProposition: (
+    boardId: string,
+    propositionId: string
+  ) => Promise<(DetectiveBoardAttempt & { feedback: string }) | null>;
   completeCurrentChapter: () => Promise<void>;
   returnToTitle: () => void;
   clearSave: () => Promise<void>;
@@ -58,6 +104,8 @@ interface GameStore extends GameProgressState {
 const progressKeys: Array<keyof GameProgressState> = [
   "currentChapterId",
   "chapterStage",
+  "unlockedChapterIds",
+  "chapterProgressById",
   "completedChapterIds",
   "completedObjectiveIds",
   "unlockedContentIds",
@@ -69,6 +117,12 @@ const progressKeys: Array<keyof GameProgressState> = [
   "unlockedReasoningIds",
   "reasoningResults",
   "reasoningAttempts",
+  "relationshipStates",
+  "relationshipHistory",
+  "timelineOrders",
+  "completedTimelinePuzzleIds",
+  "timelineAttempts",
+  "detectiveBoardStates",
   "flags"
 ];
 
@@ -76,6 +130,8 @@ function selectProgress(state: GameProgressState): GameProgressState {
   return {
     currentChapterId: state.currentChapterId,
     chapterStage: state.chapterStage,
+    unlockedChapterIds: state.unlockedChapterIds,
+    chapterProgressById: state.chapterProgressById,
     completedChapterIds: state.completedChapterIds,
     completedObjectiveIds: state.completedObjectiveIds,
     unlockedContentIds: state.unlockedContentIds,
@@ -87,6 +143,12 @@ function selectProgress(state: GameProgressState): GameProgressState {
     unlockedReasoningIds: state.unlockedReasoningIds,
     reasoningResults: state.reasoningResults,
     reasoningAttempts: state.reasoningAttempts,
+    relationshipStates: state.relationshipStates,
+    relationshipHistory: state.relationshipHistory,
+    timelineOrders: state.timelineOrders,
+    completedTimelinePuzzleIds: state.completedTimelinePuzzleIds,
+    timelineAttempts: state.timelineAttempts,
+    detectiveBoardStates: state.detectiveBoardStates,
     flags: state.flags
   };
 }
@@ -148,13 +210,16 @@ export const useGameStore = create<GameStore>((set, get) => ({
         Boolean(save) &&
         save?.gameId === story.manifest.gameId &&
         Boolean(story.chapters[save.currentChapterId]);
+      const overviewProgress = hasCompatibleSave && save
+        ? synchronizeChapterUnlocks(story, progressFromSave(save))
+        : synchronizeChapterUnlocks(story, createEmptyProgress());
 
       set({
         status: "ready",
         story,
         hasSave: hasCompatibleSave,
         sessionStarted: false,
-        ...createEmptyProgress()
+        ...progressPatch(overviewProgress)
       });
     } catch (error) {
       set({
@@ -205,6 +270,26 @@ export const useGameStore = create<GameStore>((set, get) => ({
       sessionStarted: true,
       ...progressPatch(progress)
     });
+  },
+
+  openChapter: async (chapterId) => {
+    const state = get();
+
+    if (!state.story) {
+      return;
+    }
+
+    const progress = enterChapter(
+      state.story,
+      selectProgress(state),
+      chapterId
+    );
+
+    set({
+      sessionStarted: true,
+      ...progressPatch(progress)
+    });
+    await persistCurrentState();
   },
 
   applyEvents: async (events) => {
@@ -312,6 +397,132 @@ export const useGameStore = create<GameStore>((set, get) => ({
         value
       }
     ]);
+  },
+
+  setRelationshipInsight: async (
+    relationshipId,
+    dimension,
+    value
+  ) => {
+    const state = get();
+
+    if (!state.story) {
+      return;
+    }
+
+    const updated = runRelationshipUpdate(
+      state.story,
+      selectProgress(state),
+      relationshipId,
+      dimension,
+      value
+    );
+    const progress = state.currentChapterId
+      ? synchronizeChapter(state.story, updated)
+      : synchronizeChapterUnlocks(state.story, updated);
+
+    set(progressPatch(progress));
+    await persistCurrentState();
+  },
+
+  submitTimelineOrder: async (puzzleId, orderedEventIds) => {
+    const state = get();
+
+    if (!state.story) {
+      return null;
+    }
+
+    const attempt = runTimelineOrder(
+      state.story,
+      selectProgress(state),
+      puzzleId,
+      orderedEventIds
+    );
+    const progress = state.currentChapterId
+      ? synchronizeChapter(state.story, attempt.state)
+      : synchronizeChapterUnlocks(state.story, attempt.state);
+
+    set(progressPatch(progress));
+    await persistCurrentState();
+    return attempt;
+  },
+
+  placeDetectiveCard: async (boardId, cardId, x, y) => {
+    const state = get();
+
+    if (!state.story) {
+      return;
+    }
+
+    const progress = placeDetectiveCard(
+      state.story,
+      selectProgress(state),
+      boardId,
+      cardId,
+      x,
+      y
+    );
+
+    set(progressPatch(progress));
+    await persistCurrentState();
+  },
+
+  connectDetectiveCards: async (boardId, connection) => {
+    const state = get();
+
+    if (!state.story) {
+      return;
+    }
+
+    const progress = connectDetectiveCards(
+      state.story,
+      selectProgress(state),
+      boardId,
+      connection
+    );
+
+    set(progressPatch(progress));
+    await persistCurrentState();
+  },
+
+  disconnectDetectiveCards: async (boardId, connectionId) => {
+    const state = get();
+
+    if (!state.story) {
+      return;
+    }
+
+    const progress = disconnectDetectiveCards(
+      state.story,
+      selectProgress(state),
+      boardId,
+      connectionId
+    );
+
+    set(progressPatch(progress));
+    await persistCurrentState();
+  },
+
+  submitDetectiveProposition: async (boardId, propositionId) => {
+    const state = get();
+
+    if (!state.story) {
+      return null;
+    }
+
+    const attempt = runDetectiveProposition(
+      state.story,
+      selectProgress(state),
+      boardId,
+      propositionId
+    );
+    const progress = state.currentChapterId
+      ? synchronizeChapter(state.story, attempt.state)
+      : synchronizeChapterUnlocks(state.story, attempt.state);
+
+    set(progressPatch(progress));
+    await persistCurrentState();
+    return attempt;
   },
 
   completeCurrentChapter: async () => {

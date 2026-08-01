@@ -1,4 +1,4 @@
-const CACHE_VERSION = "white-camellia-v0.3-pwa-1";
+const CACHE_VERSION = "white-camellia-v0.4.2-pwa-2";
 const CORE_ASSETS = [
   "/",
   "/index.html",
@@ -8,13 +8,28 @@ const CORE_ASSETS = [
   "/icons/apple-touch-icon.png",
   "/icons/favicon-32.png",
   "/story/runtime/manifest.json",
+  "/story/runtime/chapter-manifest.json",
   "/story/runtime/chapters/chapter-01.json",
+  "/story/runtime/chapters/chapter-02.json",
   "/story/runtime/content/chapter-01.json",
+  "/story/runtime/content/chapter-02.json",
   "/story/runtime/observations/chapter-01.json",
+  "/story/runtime/observations/chapter-02.json",
   "/story/runtime/evidence/chapter-01.json",
+  "/story/runtime/evidence/chapter-02.json",
   "/story/runtime/dialogues/shen-yishu-chapter-01.json",
+  "/story/runtime/dialogues/chapter-02.json",
   "/story/runtime/reasoning/chapter-01.json",
-  "/story/runtime/assets/chapter-01/teacup-scene.png"
+  "/story/runtime/framework/relationships.json",
+  "/story/runtime/framework/relationships-chapter-02.json",
+  "/story/runtime/framework/timelines.json",
+  "/story/runtime/framework/detective-boards.json",
+  "/story/runtime/framework/detective-boards-chapter-02.json",
+  "/story/runtime/assets/chapter-01/teacup-scene.png",
+  "/story/runtime/assets/chapter-02/qihu-photo-front.png",
+  "/story/runtime/assets/chapter-02/qihu-photo-back.png",
+  "/story/runtime/assets/chapter-02/inventory-1829.png",
+  "/story/runtime/assets/chapter-02/inventory-1838.png"
 ];
 
 async function precacheAppShell() {

@@ -1,4 +1,5 @@
 import { useGameStore } from "../../stores/game-store";
+import { createEmptyProgress } from "../../types/progress";
 import type { StoryChapter } from "../../types/story";
 import { createChapterReport } from "./chapter-report";
 
@@ -23,6 +24,7 @@ export function ChapterResult({ chapter }: { chapter: StoryChapter }) {
   }
 
   const report = createChapterReport(story, chapter, {
+    ...createEmptyProgress(),
     currentChapterId: chapter.id,
     chapterStage,
     completedChapterIds: [],
@@ -35,8 +37,7 @@ export function ChapterResult({ chapter }: { chapter: StoryChapter }) {
     completedDialogueIds: [],
     unlockedReasoningIds: [],
     reasoningResults,
-    reasoningAttempts,
-    flags: {}
+    reasoningAttempts
   });
 
   return (

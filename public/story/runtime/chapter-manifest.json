@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "chapters": [
+    {
+      "id": "chapter-00",
+      "order": 0,
+      "title": "暴雪抵达静园",
+      "subtitle": "序章",
+      "availability": "planned",
+      "chapterFile": null,
+      "unlockCondition": {
+        "type": "always"
+      }
+    },
+    {
+      "id": "chapter-01",
+      "order": 1,
+      "title": "茶杯上的指纹",
+      "availability": "available",
+      "chapterFile": "chapters/chapter-01.json",
+      "unlockCondition": {
+        "type": "always"
+      }
+    },
+    {
+      "id": "chapter-02",
+      "order": 2,
+      "title": "不存在的女儿",
+      "availability": "available",
+      "chapterFile": "chapters/chapter-02.json",
+      "unlockCondition": {
+        "type": "chapterCompleted",
+        "chapterId": "chapter-01"
+      }
+    },
+    {
+      "id": "chapter-03",
+      "order": 3,
+      "title": "所有人的好意",
+      "availability": "planned",
+      "chapterFile": null,
+      "unlockCondition": {
+        "type": "chapterCompleted",
+        "chapterId": "chapter-02"
+      }
+    },
+    {
+      "id": "chapter-04",
+      "order": 4,
+      "title": "第二份剂量",
+      "availability": "planned",
+      "chapterFile": null,
+      "unlockCondition": {
+        "type": "chapterCompleted",
+        "chapterId": "chapter-03"
+      }
+    },
+    {
+      "id": "chapter-05",
+      "order": 5,
+      "title": "没有人问她",
+      "availability": "planned",
+      "chapterFile": null,
+      "unlockCondition": {
+        "type": "chapterCompleted",
+        "chapterId": "chapter-04"
+      }
+    }
+  ]
+}

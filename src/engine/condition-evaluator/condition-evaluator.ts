@@ -10,6 +10,9 @@ export type ConditionContext = Pick<
   | "collectedEvidenceIds"
   | "completedDialogueIds"
   | "reasoningResults"
+  | "relationshipStates"
+  | "completedTimelinePuzzleIds"
+  | "detectiveBoardStates"
   | "flags"
 >;
 
@@ -38,6 +41,20 @@ export function evaluateCondition(
       return Boolean(context.reasoningResults[condition.reasoningId]);
     case "objectiveCompleted":
       return context.completedObjectiveIds.includes(condition.objectiveId);
+    case "relationshipStateEquals":
+      return (
+        context.relationshipStates[condition.relationshipId]?.[
+          condition.dimension
+        ] === condition.state
+      );
+    case "timelineCompleted":
+      return context.completedTimelinePuzzleIds.includes(condition.puzzleId);
+    case "detectivePropositionCompleted":
+      return Boolean(
+        context.detectiveBoardStates[
+          condition.boardId
+        ]?.solvedPropositionIds.includes(condition.propositionId)
+      );
     case "all":
       return condition.conditions.every((child) =>
         evaluateCondition(child, context)

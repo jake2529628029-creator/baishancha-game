@@ -1,11 +1,4 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import chapter from "../../public/story/runtime/chapters/chapter-01.json";
-import content from "../../public/story/runtime/content/chapter-01.json";
-import dialogues from "../../public/story/runtime/dialogues/shen-yishu-chapter-01.json";
-import evidence from "../../public/story/runtime/evidence/chapter-01.json";
-import manifest from "../../public/story/runtime/manifest.json";
-import observations from "../../public/story/runtime/observations/chapter-01.json";
-import reasoning from "../../public/story/runtime/reasoning/chapter-01.json";
 import {
   completeActiveChapter,
   discoverObservation,
@@ -16,31 +9,19 @@ import { presentDialogueEvidence } from "../../src/engine/dialogue-engine/dialog
 import { submitReasoning } from "../../src/engine/reasoning-engine/reasoning-engine";
 import { loadStory } from "../../src/engine/story-loader/story-loader";
 import { createChapterReport } from "../../src/features/chapter-result/chapter-report";
+import { getEvidenceNotebookCount } from "../../src/features/evidence-notebook/evidence-notebook-count";
 import { createEmptyProgress } from "../../src/types/progress";
 import type { LoadedStory } from "../../src/types/story";
+import { runtimePayloadForUrl } from "../fixtures/runtime-payloads";
 
 describe("chapter one standard playthrough", () => {
   let story: LoadedStory;
 
   beforeAll(async () => {
-    const payloadBySuffix: Record<string, unknown> = {
-      "manifest.json": manifest,
-      "chapters/chapter-01.json": chapter,
-      "content/chapter-01.json": content,
-      "observations/chapter-01.json": observations,
-      "evidence/chapter-01.json": evidence,
-      "dialogues/shen-yishu-chapter-01.json": dialogues,
-      "reasoning/chapter-01.json": reasoning
-    };
-
     vi.stubGlobal(
       "fetch",
       vi.fn(async (input: string | URL | Request) => {
-        const url = String(input);
-        const suffix = Object.keys(payloadBySuffix).find((key) =>
-          url.endsWith(key)
-        );
-        const payload = suffix ? payloadBySuffix[suffix] : undefined;
+        const payload = runtimePayloadForUrl(input);
 
         return new Response(JSON.stringify(payload), {
           status: payload ? 200 : 404,
@@ -156,6 +137,16 @@ describe("chapter one standard playthrough", () => {
       "evidence-insufficient-dose"
     );
     expect(state.reasoningAttempts).toHaveLength(3);
+    expect(
+      getEvidenceNotebookCount(
+        story,
+        state.unlockedChapterIds,
+        state.collectedEvidenceIds
+      )
+    ).toMatchObject({
+      collectedCount: 6,
+      totalCount: 6
+    });
 
     const report = createChapterReport(
       story,
@@ -194,5 +185,23 @@ describe("chapter one standard playthrough", () => {
 
     expect(state.chapterStage).toBe("completed");
     expect(state.completedChapterIds).toContain("chapter-01");
+    expect(state.unlockedChapterIds).toContain("chapter-02");
+    expect(state.chapterProgressById["chapter-01"]).toMatchObject({
+      status: "completed",
+      stage: "completed",
+      progressPercent: 100
+    });
+    expect(state.currentChapterId).toBe("chapter-01");
+    expect(state.unlockedChapterIds).toContain("chapter-02");
+    expect(
+      getEvidenceNotebookCount(
+        story,
+        state.unlockedChapterIds,
+        state.collectedEvidenceIds
+      )
+    ).toMatchObject({
+      collectedCount: 6,
+      totalCount: 12
+    });
   });
 });

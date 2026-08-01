@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useGameStore } from "../../stores/game-store";
+import { getEvidenceNotebookCount } from "./evidence-notebook-count";
 
 type NotebookTab = "materials" | "observations" | "evidence";
 
@@ -18,6 +19,7 @@ export function InvestigationNotebook({
 }: InvestigationNotebookProps) {
   const story = useGameStore((state) => state.story);
   const currentChapterId = useGameStore((state) => state.currentChapterId);
+  const unlockedChapterIds = useGameStore((state) => state.unlockedChapterIds);
   const unlockedContentIds = useGameStore((state) => state.unlockedContentIds);
   const viewedContentIds = useGameStore((state) => state.viewedContentIds);
   const discoveredObservationIds = useGameStore(
@@ -31,16 +33,18 @@ export function InvestigationNotebook({
   }
 
   const chapter = story.chapters[currentChapterId];
-  const chapterEvidenceCount = Object.values(story.evidence).filter(
-    (item) => item.chapterId === currentChapterId
-  ).length;
+  const evidenceCount = getEvidenceNotebookCount(
+    story,
+    unlockedChapterIds,
+    collectedEvidenceIds
+  );
 
   return (
     <section className="case-panel notebook">
       <div className="panel-heading">
         <p className="section-label">调查证据簿</p>
         <span>
-          {collectedEvidenceIds.length}/{chapterEvidenceCount}
+          {evidenceCount.collectedCount}/{evidenceCount.totalCount}
         </span>
       </div>
       <div className="notebook-tabs" role="tablist" aria-label="证据簿分类">
@@ -109,9 +113,9 @@ export function InvestigationNotebook({
       ) : null}
 
       {activeTab === "evidence" ? (
-        collectedEvidenceIds.length ? (
+        evidenceCount.collectedEvidenceIds.length ? (
           <ul className="notebook-list notebook-list--evidence">
-            {collectedEvidenceIds.map((id) => {
+            {evidenceCount.collectedEvidenceIds.map((id) => {
               const evidence = story.evidence[id];
               return (
                 <li key={id}>

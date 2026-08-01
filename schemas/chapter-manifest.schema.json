@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://white-camellia.local/schemas/chapter-manifest.schema.json",
+  "title": "White Camellia Chapter Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "chapters"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "order",
+          "title",
+          "availability",
+          "chapterFile",
+          "unlockCondition"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^chapter-0[0-5]$"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subtitle": {
+            "type": "string"
+          },
+          "availability": {
+            "enum": ["available", "planned"]
+          },
+          "chapterFile": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unlockCondition": {
+            "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/condition"
+          }
+        }
+      }
+    }
+  }
+}

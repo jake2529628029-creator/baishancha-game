@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://white-camellia.local/schemas/relationship.schema.json",
+  "title": "White Camellia Relationship Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["characters", "relationships"],
+  "properties": {
+    "characters": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "role"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "portraitAssetId": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "fromCharacterId",
+          "toCharacterId",
+          "type",
+          "label",
+          "initialDimensions",
+          "revealCondition"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fromCharacterId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "toCharacterId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "family",
+              "protects",
+              "controls",
+              "withholds",
+              "conflicts",
+              "trusts",
+              "custom"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initialDimensions": {
+            "$ref": "#/definitions/dimensions"
+          },
+          "revealCondition": {
+            "$ref": "https://white-camellia.local/schemas/definitions.schema.json#/definitions/condition"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "insightState": {
+      "enum": [
+        "unknown",
+        "suspected",
+        "confirmed",
+        "questioned",
+        "reinterpreted"
+      ]
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "trust": {
+          "$ref": "#/definitions/insightState"
+        },
+        "suspicion": {
+          "$ref": "#/definitions/insightState"
+        },
+        "understanding": {
+          "$ref": "#/definitions/insightState"
+        },
+        "hidden_information": {
+          "$ref": "#/definitions/insightState"
+        }
+      }
+    }
+  }
+}

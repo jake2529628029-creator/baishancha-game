@@ -1,11 +1,4 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import chapter from "../../public/story/runtime/chapters/chapter-01.json";
-import content from "../../public/story/runtime/content/chapter-01.json";
-import dialogues from "../../public/story/runtime/dialogues/shen-yishu-chapter-01.json";
-import evidence from "../../public/story/runtime/evidence/chapter-01.json";
-import manifest from "../../public/story/runtime/manifest.json";
-import observations from "../../public/story/runtime/observations/chapter-01.json";
-import reasoning from "../../public/story/runtime/reasoning/chapter-01.json";
 import {
   discoverObservation,
   dispatchChapterEvents,
@@ -17,29 +10,16 @@ import { presentDialogueEvidence } from "../../src/engine/dialogue-engine/dialog
 import { submitReasoning } from "../../src/engine/reasoning-engine/reasoning-engine";
 import { createEmptyProgress } from "../../src/types/progress";
 import type { LoadedStory } from "../../src/types/story";
+import { runtimePayloadForUrl } from "../fixtures/runtime-payloads";
 
 describe("chapter engine", () => {
   let story: LoadedStory;
 
   beforeAll(async () => {
-    const payloadBySuffix: Record<string, unknown> = {
-      "manifest.json": manifest,
-      "chapters/chapter-01.json": chapter,
-      "content/chapter-01.json": content,
-      "observations/chapter-01.json": observations,
-      "evidence/chapter-01.json": evidence,
-      "dialogues/shen-yishu-chapter-01.json": dialogues,
-      "reasoning/chapter-01.json": reasoning
-    };
-
     vi.stubGlobal(
       "fetch",
       vi.fn(async (input: string | URL | Request) => {
-        const url = String(input);
-        const suffix = Object.keys(payloadBySuffix).find((key) =>
-          url.endsWith(key)
-        );
-        const payload = suffix ? payloadBySuffix[suffix] : undefined;
+        const payload = runtimePayloadForUrl(input);
 
         return new Response(JSON.stringify(payload), {
           status: payload ? 200 : 404,
@@ -58,6 +38,12 @@ describe("chapter engine", () => {
     const state = enterChapter(story, createEmptyProgress(), "chapter-01");
 
     expect(state.chapterStage).toBe("investigating");
+    expect(state.unlockedChapterIds).toEqual(
+      expect.arrayContaining(["chapter-00", "chapter-01"])
+    );
+    expect(state.chapterProgressById["chapter-01"].status).toBe(
+      "in-progress"
+    );
     expect(state.unlockedContentIds).toEqual(
       expect.arrayContaining([
         "content-scene-report",
@@ -73,6 +59,12 @@ describe("chapter engine", () => {
 
     expect(state.viewedContentIds).toContain("content-scene-report");
     expect(state.completedObjectiveIds).toContain("inspect-scene");
+    expect(
+      state.chapterProgressById["chapter-01"].completedObjectiveIds
+    ).toContain("inspect-scene");
+    expect(state.chapterProgressById["chapter-01"].progressPercent).toBeGreaterThan(
+      0
+    );
     expect(state.unlockedContentIds).toContain(
       "content-toxicology-summary"
     );
@@ -188,5 +180,84 @@ describe("chapter engine", () => {
       "solution-immediate-pressure"
     );
     expect(correctAttempt.state.reasoningAttempts[0].matched).toBe(true);
+  });
+
+  it("saves and restores chapter-local progress when switching chapters", () => {
+    const chapterTwo = {
+      ...story.chapters["chapter-01"],
+      id: "chapter-02",
+      order: 2,
+      title: "Framework Chapter",
+      scenes: [],
+      journalEntries: [],
+      objectives: [
+        {
+          id: "chapter-two-objective",
+          text: "Framework objective",
+          completionCondition: {
+            type: "flagEquals" as const,
+            flagId: "chapter-two-complete",
+            value: true
+          }
+        }
+      ],
+      initialEvents: [
+        {
+          type: "setChapterStage" as const,
+          stage: "investigating" as const
+        }
+      ],
+      contentIds: [],
+      dialogueIds: [],
+      reasoningIds: [],
+      entryCondition: {
+        type: "always" as const
+      },
+      completionCondition: {
+        type: "flagEquals" as const,
+        flagId: "chapter-two-complete",
+        value: true
+      },
+      nextChapterId: null
+    };
+    const twoChapterStory: LoadedStory = {
+      ...story,
+      chapterManifest: {
+        ...story.chapterManifest,
+        chapters: story.chapterManifest.chapters.map((entry) =>
+          entry.id === "chapter-02"
+            ? {
+                ...entry,
+                availability: "available",
+                chapterFile: "chapters/chapter-02.json",
+                unlockCondition: {
+                  type: "always"
+                }
+              }
+            : entry
+        )
+      },
+      chapters: {
+        ...story.chapters,
+        "chapter-02": chapterTwo
+      }
+    };
+    let state = enterChapter(
+      twoChapterStory,
+      createEmptyProgress(),
+      "chapter-01"
+    );
+
+    state = viewContent(twoChapterStory, state, "content-scene-report");
+    expect(state.completedObjectiveIds).toContain("inspect-scene");
+
+    state = enterChapter(twoChapterStory, state, "chapter-02");
+    expect(state.currentChapterId).toBe("chapter-02");
+    expect(
+      state.chapterProgressById["chapter-01"].completedObjectiveIds
+    ).toContain("inspect-scene");
+
+    state = enterChapter(twoChapterStory, state, "chapter-01");
+    expect(state.completedObjectiveIds).toContain("inspect-scene");
   });
 });
