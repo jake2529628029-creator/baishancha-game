@@ -96,7 +96,7 @@ interface GameStore extends GameProgressState {
     boardId: string,
     propositionId: string
   ) => Promise<(DetectiveBoardAttempt & { feedback: string }) | null>;
-  completeCurrentChapter: () => Promise<void>;
+  completeCurrentChapter: (expectedChapterId?: string) => Promise<void>;
   returnToTitle: () => void;
   clearSave: () => Promise<void>;
 }
@@ -525,10 +525,13 @@ export const useGameStore = create<GameStore>((set, get) => ({
     return attempt;
   },
 
-  completeCurrentChapter: async () => {
+  completeCurrentChapter: async (expectedChapterId) => {
     const state = get();
 
-    if (!state.story) {
+    if (
+      !state.story ||
+      (expectedChapterId && state.currentChapterId !== expectedChapterId)
+    ) {
       return;
     }
 

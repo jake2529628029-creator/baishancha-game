@@ -55,7 +55,7 @@ describe("PWA assets", () => {
 
     expect(serviceWorker).toContain("/index.html");
     expect(serviceWorker).toContain(
-      'CACHE_VERSION = "white-camellia-v0.4.2-pwa-2"'
+      'CACHE_VERSION = "white-camellia-v0.4.2-pwa-3"'
     );
     expect(serviceWorker).toContain("/story/runtime/manifest.json");
     expect(serviceWorker).toContain("/story/runtime/chapter-manifest.json");

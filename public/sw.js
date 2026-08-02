@@ -1,4 +1,4 @@
-const CACHE_VERSION = "white-camellia-v0.4.2-pwa-2";
+const CACHE_VERSION = "white-camellia-v0.4.2-pwa-3";
 const CORE_ASSETS = [
   "/",
   "/index.html",

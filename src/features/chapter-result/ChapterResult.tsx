@@ -2,6 +2,7 @@ import { useGameStore } from "../../stores/game-store";
 import { createEmptyProgress } from "../../types/progress";
 import type { StoryChapter } from "../../types/story";
 import { createChapterReport } from "./chapter-report";
+import { getChapterSettlementCopy } from "./chapter-settlement-copy";
 
 export function ChapterResult({ chapter }: { chapter: StoryChapter }) {
   const chapterStage = useGameStore((state) => state.chapterStage);
@@ -14,21 +15,33 @@ export function ChapterResult({ chapter }: { chapter: StoryChapter }) {
   );
   const reasoningResults = useGameStore((state) => state.reasoningResults);
   const reasoningAttempts = useGameStore((state) => state.reasoningAttempts);
+  const completedChapterIds = useGameStore(
+    (state) => state.completedChapterIds
+  );
+  const chapterProgress = useGameStore(
+    (state) => state.chapterProgressById[chapter.id]
+  );
   const completeCurrentChapter = useGameStore(
     (state) => state.completeCurrentChapter
   );
-  const completed = chapterStage === "completed";
+  const completed =
+    completedChapterIds.includes(chapter.id) ||
+    chapterProgress?.stage === "completed";
 
   if (!story) {
     return null;
   }
+
+  const settlementCopy = getChapterSettlementCopy(chapter);
+  const chapterObjectiveIds =
+    chapterProgress?.completedObjectiveIds ?? completedObjectiveIds;
 
   const report = createChapterReport(story, chapter, {
     ...createEmptyProgress(),
     currentChapterId: chapter.id,
     chapterStage,
     completedChapterIds: [],
-    completedObjectiveIds,
+    completedObjectiveIds: chapterObjectiveIds,
     unlockedContentIds: [],
     viewedContentIds: [],
     discoveredObservationIds,
@@ -67,7 +80,7 @@ export function ChapterResult({ chapter }: { chapter: StoryChapter }) {
       <section className="settlement-report">
         <header>
           <div>
-            <p className="section-label">Chapter 01 · Settlement</p>
+            <p className="section-label">{settlementCopy.settlementLabel}</p>
             <h3>调查结算报告</h3>
           </div>
           <div className="report-score">
@@ -147,9 +160,11 @@ export function ChapterResult({ chapter }: { chapter: StoryChapter }) {
         className="primary-button"
         type="button"
         disabled={completed}
-        onClick={() => completeCurrentChapter()}
+        onClick={() => completeCurrentChapter(chapter.id)}
       >
-        {completed ? "第一章已完成" : "封存第一章调查记录"}
+        {completed
+          ? settlementCopy.completedLabel
+          : settlementCopy.archiveLabel}
       </button>
     </section>
   );
