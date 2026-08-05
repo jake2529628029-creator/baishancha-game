@@ -11,6 +11,13 @@ import { EvidenceConnections } from "../evidence-connections/EvidenceConnections
 import { RelationshipGraph } from "../relationship-graph/RelationshipGraph";
 import { TimelineBoard } from "../timeline-board/TimelineBoard";
 import { DetectiveBoard } from "../detective-board/DetectiveBoard";
+import { UnlockToasts } from "./UnlockToasts";
+import {
+  getChapterStageLabel,
+  getContentRemainingClues,
+  getSceneProgress,
+  suggestNextStep
+} from "./workspace-progress";
 
 type WorkspaceMode =
   | "investigation"
@@ -39,8 +46,11 @@ export function ChapterWorkspace() {
   const discoveredObservationIds = useGameStore(
     (state) => state.discoveredObservationIds
   );
+  const collectedEvidenceIds = useGameStore((state) => state.collectedEvidenceIds);
   const unlockedDialogueIds = useGameStore((state) => state.unlockedDialogueIds);
+  const completedDialogueIds = useGameStore((state) => state.completedDialogueIds);
   const unlockedReasoningIds = useGameStore((state) => state.unlockedReasoningIds);
+  const reasoningResults = useGameStore((state) => state.reasoningResults);
   const chapterStage = useGameStore((state) => state.chapterStage);
   const returnToTitle = useGameStore((state) => state.returnToTitle);
 
@@ -60,6 +70,18 @@ export function ChapterWorkspace() {
   if (!story || !chapter) {
     return null;
   }
+
+  const progressSnapshot = {
+    unlockedContentIds,
+    viewedContentIds,
+    discoveredObservationIds,
+    collectedEvidenceIds,
+    unlockedDialogueIds,
+    completedDialogueIds,
+    unlockedReasoningIds,
+    reasoningResults
+  };
+  const nextStep = suggestNextStep(story, progressSnapshot, chapter);
 
   const materials = (activeScene?.contentIds ?? [])
     .filter((contentId) => unlockedContentIds.includes(contentId))
@@ -84,8 +106,38 @@ export function ChapterWorkspace() {
     (item) => item.id === chapter.id
   );
 
+  // 待处理数（未完成的才提醒），而不是总数——总数只是噪音
+  const pendingDialogueCount = unlockedDialogueIds.filter(
+    (id) => !completedDialogueIds.includes(id)
+  ).length;
+  const pendingReasoningCount = unlockedReasoningIds.filter(
+    (id) => !reasoningResults[id]
+  ).length;
+
+  const chapterContentUnlocked = chapter.contentIds.filter((id) =>
+    unlockedContentIds.includes(id)
+  );
+  const chapterContentViewed = chapterContentUnlocked.filter((id) =>
+    viewedContentIds.includes(id)
+  );
+  const chapterDialogueDone = chapter.dialogueIds.filter((id) =>
+    completedDialogueIds.includes(id)
+  ).length;
+  const chapterReasoningDone = chapter.reasoningIds.filter(
+    (id) => reasoningResults[id]
+  ).length;
+
   return (
     <main className="workspace-shell">
+      <UnlockToasts
+        onNavigate={(kind) => {
+          if (kind === "dialogue") setWorkspaceMode("dialogue");
+          else if (kind === "reasoning") setWorkspaceMode("reasoning");
+          else if (kind === "evidence" || kind === "observation")
+            setWorkspaceMode("journal");
+          else setWorkspaceMode("investigation");
+        }}
+      />
       <header className="workspace-header">
         <div>
           <p className="eyebrow">
@@ -108,8 +160,22 @@ export function ChapterWorkspace() {
             onClick={() => setWorkspaceMode("dialogue")}
           >
             询问
-            {unlockedDialogueIds.length ? (
-              <span>{unlockedDialogueIds.length}</span>
+            {pendingDialogueCount ? (
+              <span className="nav-badge nav-badge--pending">
+                {pendingDialogueCount}
+              </span>
+            ) : null}
+          </button>
+          <button
+            className={workspaceMode === "reasoning" ? "is-active" : ""}
+            type="button"
+            onClick={() => setWorkspaceMode("reasoning")}
+          >
+            推理
+            {pendingReasoningCount ? (
+              <span className="nav-badge nav-badge--pending">
+                {pendingReasoningCount}
+              </span>
             ) : null}
           </button>
           <button
@@ -147,16 +213,6 @@ export function ChapterWorkspace() {
           >
             侦探墙
           </button>
-          <button
-            className={workspaceMode === "reasoning" ? "is-active" : ""}
-            type="button"
-            onClick={() => setWorkspaceMode("reasoning")}
-          >
-            推理
-            {unlockedReasoningIds.length ? (
-              <span>{unlockedReasoningIds.length}</span>
-            ) : null}
-          </button>
         </nav>
         <div className="workspace-header__actions">
           <span className="save-indicator">● 本地自动存档</span>
@@ -171,21 +227,32 @@ export function ChapterWorkspace() {
           <section className="rail-section">
             <p className="section-label">调查地点</p>
             <nav className="scene-nav" aria-label="调查地点">
-              {chapter.scenes.map((scene) => (
-                <button
-                  className={scene.id === activeSceneId ? "is-active" : ""}
-                  type="button"
-                  key={scene.id}
-                  onClick={() => {
-                    setActiveSceneId(scene.id);
-                    setSelectedContentId(null);
-                    setWorkspaceMode("investigation");
-                  }}
-                >
-                  <span>{scene.eyebrow}</span>
-                  {scene.name}
-                </button>
-              ))}
+              {chapter.scenes.map((scene) => {
+                const sceneProgress = getSceneProgress(
+                  story,
+                  progressSnapshot,
+                  chapter,
+                  scene.id
+                );
+                return (
+                  <button
+                    className={scene.id === activeSceneId ? "is-active" : ""}
+                    type="button"
+                    key={scene.id}
+                    onClick={() => {
+                      setActiveSceneId(scene.id);
+                      setSelectedContentId(null);
+                      setWorkspaceMode("investigation");
+                    }}
+                  >
+                    <span>{scene.eyebrow}</span>
+                    {scene.name}
+                    <small className="scene-progress">
+                      {sceneProgress.viewed}/{sceneProgress.unlocked} 已查阅
+                    </small>
+                  </button>
+                );
+              })}
             </nav>
           </section>
 
@@ -202,6 +269,22 @@ export function ChapterWorkspace() {
                 );
               })}
             </ol>
+            {nextStep ? (
+              <button
+                className="next-step-card"
+                type="button"
+                onClick={() => {
+                  if (nextStep.target === "investigation" && nextStep.contentId) {
+                    openContent(nextStep.contentId);
+                  } else {
+                    setWorkspaceMode(nextStep.target);
+                  }
+                }}
+              >
+                <span className="section-label">下一步建议</span>
+                <span>{nextStep.text}</span>
+              </button>
+            ) : null}
           </section>
         </aside>
 
@@ -236,6 +319,11 @@ export function ChapterWorkspace() {
               <div className="material-grid">
                 {materials.map((content) => {
                   const viewed = viewedContentIds.includes(content.id);
+                  const clues = getContentRemainingClues(
+                    story,
+                    progressSnapshot,
+                    content.id
+                  );
                   return (
                     <button
                       className={`material-card${selectedContentId === content.id ? " is-active" : ""}`}
@@ -252,7 +340,19 @@ export function ChapterWorkspace() {
                       </span>
                       <strong>{content.title}</strong>
                       <span>{content.summary}</span>
-                      <small>{viewed ? "已查阅" : "未查阅"}</small>
+                      <small className="material-card__status">
+                        {!viewed ? (
+                          <em className="status-tag status-tag--new">新</em>
+                        ) : clues.remaining > 0 ? (
+                          <em className="status-tag status-tag--clues">
+                            还有 {clues.remaining} 处细节
+                          </em>
+                        ) : clues.total > 0 ? (
+                          <em className="status-tag status-tag--done">已挖完</em>
+                        ) : (
+                          <em className="status-tag">已查阅</em>
+                        )}
+                      </small>
                     </button>
                   );
                 })}
@@ -278,23 +378,37 @@ export function ChapterWorkspace() {
           <InvestigationNotebook onOpenContent={openContent} />
 
           <section className="case-panel">
-            <p className="section-label">游戏状态</p>
+            <p className="section-label">调查进度</p>
             <dl className="state-list">
               <div>
-                <dt>章节阶段</dt>
-                <dd>{chapterStage}</dd>
+                <dt>当前阶段</dt>
+                <dd>{getChapterStageLabel(chapterStage)}</dd>
               </div>
               <div>
-                <dt>观察</dt>
+                <dt>材料查阅</dt>
+                <dd>
+                  {chapterContentViewed.length}/{chapterContentUnlocked.length}
+                </dd>
+              </div>
+              <div>
+                <dt>观察细节</dt>
                 <dd>{discoveredObservationIds.length}</dd>
               </div>
               <div>
-                <dt>对话话题</dt>
-                <dd>{unlockedDialogueIds.length}</dd>
+                <dt>正式证据</dt>
+                <dd>{collectedEvidenceIds.length}</dd>
               </div>
               <div>
-                <dt>推理节点</dt>
-                <dd>{unlockedReasoningIds.length}</dd>
+                <dt>询问完成</dt>
+                <dd>
+                  {chapterDialogueDone}/{chapter.dialogueIds.length}
+                </dd>
+              </div>
+              <div>
+                <dt>推理完成</dt>
+                <dd>
+                  {chapterReasoningDone}/{chapter.reasoningIds.length}
+                </dd>
               </div>
             </dl>
           </section>

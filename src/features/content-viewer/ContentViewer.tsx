@@ -286,10 +286,24 @@ function ChatView({ content }: { content: ContentItem }) {
 
 export function ContentViewer({ content, onClose }: ContentViewerProps) {
   const viewContent = useGameStore((state) => state.viewContent);
+  const story = useGameStore((state) => state.story);
+  const discoveredObservationIds = useGameStore(
+    (state) => state.discoveredObservationIds
+  );
 
   useEffect(() => {
     void viewContent(content.id);
   }, [content.id, viewContent]);
+
+  // 本材料内可标记细节的总数与已发现数——让玩家知道这份材料"挖干净了没有"
+  const relatedObservations = story
+    ? Object.values(story.observations).filter((observation) =>
+        observation.sourceContentIds.includes(content.id)
+      )
+    : [];
+  const discoveredCount = relatedObservations.filter((observation) =>
+    discoveredObservationIds.includes(observation.id)
+  ).length;
 
   return (
     <article className="content-viewer" aria-live="polite">
@@ -325,6 +339,18 @@ export function ContentViewer({ content, onClose }: ContentViewerProps) {
         />
       ) : null}
       {content.type === "chat" ? <ChatView content={content} /> : null}
+
+      {relatedObservations.length ? (
+        <footer
+          className={`content-viewer__progress${
+            discoveredCount === relatedObservations.length ? " is-complete" : ""
+          }`}
+        >
+          {discoveredCount === relatedObservations.length
+            ? `本材料的 ${relatedObservations.length} 处关键细节已全部标记。`
+            : `本材料已标记 ${discoveredCount}/${relatedObservations.length} 处关键细节。`}
+        </footer>
+      ) : null}
     </article>
   );
 }

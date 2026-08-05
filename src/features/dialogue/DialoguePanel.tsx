@@ -31,6 +31,9 @@ export function DialoguePanel() {
   const [selectedEvidenceIds, setSelectedEvidenceIds] = useState<string[]>([]);
   const [responseLines, setResponseLines] = useState<DialogueLine[]>([]);
   const [matched, setMatched] = useState<boolean | null>(null);
+  const [relevantCount, setRelevantCount] = useState(0);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [revealedHints, setRevealedHints] = useState(0);
 
   const chapter =
     story && currentChapterId ? story.chapters[currentChapterId] : null;
@@ -48,11 +51,29 @@ export function DialoguePanel() {
     setSelectedEvidenceIds([]);
     setResponseLines([]);
     setMatched(null);
+    setRelevantCount(0);
+    setFailedAttempts(0);
+    setRevealedHints(0);
   }, [resolvedDialogueId]);
 
   if (!story || !chapter) {
     return null;
   }
+
+  const toggleEvidence = (evidenceId: string) => {
+    setSelectedEvidenceIds((current) =>
+      current.includes(evidenceId)
+        ? current.filter((item) => item !== evidenceId)
+        : [...current, evidenceId]
+    );
+    setMatched(null);
+  };
+
+  const hints = dialogue?.hints ?? [];
+  const dialogueCompleted = dialogue
+    ? completedDialogueIds.includes(dialogue.id)
+    : false;
+  const hintButtonHot = failedAttempts >= 2 && revealedHints < hints.length;
 
   return (
     <section className="dialogue-panel">
@@ -116,53 +137,100 @@ export function DialoguePanel() {
               </div>
 
               <div className="present-evidence">
-                <p className="section-label">选择要出示的证据</p>
-                <div className="evidence-options">
-                  {collectedEvidenceIds.map((id) => (
-                    <label key={id}>
-                      <input
-                        type="checkbox"
-                        checked={selectedEvidenceIds.includes(id)}
-                        onChange={() =>
-                          setSelectedEvidenceIds((current) =>
-                            current.includes(id)
-                              ? current.filter((item) => item !== id)
-                              : [...current, id]
-                          )
-                        }
-                      />
-                      <span>{story.evidence[id].title}</span>
-                    </label>
-                  ))}
-                </div>
-                <button
-                  className="primary-button"
-                  type="button"
-                  disabled={
-                    !selectedEvidenceIds.length ||
-                    completedDialogueIds.includes(dialogue.id)
-                  }
-                  onClick={async () => {
-                    const attempt = await presentDialogueEvidence(
-                      dialogue.id,
-                      selectedEvidenceIds
+                <p className="section-label">点选要出示的证据（可组合）</p>
+                <div className="evidence-pool" aria-label="可出示的证据">
+                  {collectedEvidenceIds.map((id) => {
+                    const evidence = story.evidence[id];
+                    const selected = selectedEvidenceIds.includes(id);
+                    return (
+                      <button
+                        className={`evidence-chip${selected ? " evidence-chip--filled" : ""}`}
+                        type="button"
+                        key={id}
+                        disabled={dialogueCompleted}
+                        aria-pressed={selected}
+                        title={evidence.description}
+                        onClick={() => toggleEvidence(id)}
+                      >
+                        <small>{evidence.category}</small>
+                        {evidence.title}
+                      </button>
                     );
-                    if (attempt) {
-                      setResponseLines(attempt.lines);
-                      setMatched(attempt.matched);
-                    }
-                  }}
-                >
-                  {completedDialogueIds.includes(dialogue.id)
-                    ? "话题已完成"
-                    : "出示证据"}
-                </button>
+                  })}
+                </div>
+                <div className="reasoning-actions">
+                  <button
+                    className="primary-button"
+                    type="button"
+                    disabled={!selectedEvidenceIds.length || dialogueCompleted}
+                    onClick={async () => {
+                      const attempt = await presentDialogueEvidence(
+                        dialogue.id,
+                        selectedEvidenceIds
+                      );
+                      if (attempt) {
+                        setResponseLines(attempt.lines);
+                        setMatched(attempt.matched);
+                        if (!attempt.matched) {
+                          setRelevantCount(attempt.relevantCount ?? 0);
+                          setFailedAttempts((count) => count + 1);
+                        }
+                      }
+                    }}
+                  >
+                    {dialogueCompleted ? "话题已完成" : "出示证据"}
+                  </button>
+                  {hints.length && !dialogueCompleted ? (
+                    <button
+                      className={`hint-button${hintButtonHot ? " hint-button--hot" : ""}`}
+                      type="button"
+                      onClick={() =>
+                        setRevealedHints((current) =>
+                          Math.min(current + 1, hints.length)
+                        )
+                      }
+                    >
+                      {revealedHints >= hints.length
+                        ? "提示已全部展开"
+                        : revealedHints > 0
+                          ? "再提示一点"
+                          : "需要提示？"}
+                    </button>
+                  ) : null}
+                </div>
+
+                {revealedHints > 0 ? (
+                  <ol className="hint-list">
+                    {hints.slice(0, revealedHints).map((hint, index) => (
+                      <li key={index}>
+                        <span className="section-label">提示 {index + 1}</span>
+                        {hint}
+                      </li>
+                    ))}
+                  </ol>
+                ) : null}
+
                 {matched !== null ? (
-                  <p className={`attempt-status ${matched ? "is-match" : ""}`}>
-                    {matched
-                      ? "证据击中了这个话题的关键。"
-                      : "这组证据与当前话题无法形成有效质询。"}
-                  </p>
+                  <div className={`attempt-status ${matched ? "is-match" : ""}`}>
+                    {matched ? (
+                      <p>证据击中了这个话题的关键。新解锁的内容会在右上角提示。</p>
+                    ) : (
+                      <>
+                        <p>这组证据与当前话题无法形成有效质询。</p>
+                        {relevantCount > 0 ? (
+                          <p className="closeness-note">
+                            不过其中有 {relevantCount} 份证据确实和她在这个话题上
+                            关心的事有关——换掉其余的再试试。
+                          </p>
+                        ) : null}
+                        {failedAttempts >= 2 && hints.length ? (
+                          <p className="closeness-note">
+                            连续几次没命中？点上面的「需要提示」换个思路。
+                          </p>
+                        ) : null}
+                      </>
+                    )}
+                  </div>
                 ) : null}
               </div>
             </div>

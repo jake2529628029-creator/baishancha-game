@@ -47,12 +47,82 @@ import type { TimelineAttempt } from "../types/timeline";
 
 type GameStatus = "idle" | "loading" | "ready" | "error";
 
+/** 解锁通知：进度变化时 diff 出来，Toast 展示后可点击跳转 */
+export interface UnlockNotification {
+  id: number;
+  kind: "content" | "dialogue" | "reasoning" | "evidence" | "observation";
+  title: string;
+  detail: string;
+}
+
+let nextNotificationId = 1;
+
+/** 对比前后进度，把"悄悄发生的解锁"变成玩家可见的通知 */
+function diffUnlockNotifications(
+  story: LoadedStory,
+  previous: GameProgressState,
+  next: GameProgressState
+): UnlockNotification[] {
+  const notifications: UnlockNotification[] = [];
+  const collect = (before: string[], after: string[]) =>
+    after.filter((item) => !before.includes(item));
+
+  for (const id of collect(previous.unlockedContentIds, next.unlockedContentIds)) {
+    const content = story.content[id];
+    if (content) {
+      notifications.push({
+        id: nextNotificationId++,
+        kind: "content",
+        title: "新材料解锁",
+        detail: `《${content.title}》已放入调查台`
+      });
+    }
+  }
+  for (const id of collect(previous.unlockedDialogueIds, next.unlockedDialogueIds)) {
+    const dialogue = story.dialogues[id];
+    if (dialogue) {
+      notifications.push({
+        id: nextNotificationId++,
+        kind: "dialogue",
+        title: "新话题解锁",
+        detail: `可以询问${dialogue.characterName}：${dialogue.topic}`
+      });
+    }
+  }
+  for (const id of collect(previous.unlockedReasoningIds, next.unlockedReasoningIds)) {
+    const reasoning = story.reasoning[id];
+    if (reasoning) {
+      notifications.push({
+        id: nextNotificationId++,
+        kind: "reasoning",
+        title: "新推理问题",
+        detail: reasoning.question
+      });
+    }
+  }
+  for (const id of collect(previous.collectedEvidenceIds, next.collectedEvidenceIds)) {
+    const evidence = story.evidence[id];
+    if (evidence) {
+      notifications.push({
+        id: nextNotificationId++,
+        kind: "evidence",
+        title: "证据成立",
+        detail: `「${evidence.title}」已收入证据簿`
+      });
+    }
+  }
+
+  return notifications;
+}
+
 interface GameStore extends GameProgressState {
   status: GameStatus;
   errorMessage: string | null;
   story: LoadedStory | null;
   sessionStarted: boolean;
   hasSave: boolean;
+  notifications: UnlockNotification[];
+  dismissNotification: (notificationId: number) => void;
   bootstrap: () => Promise<void>;
   startNewGame: () => Promise<void>;
   continueGame: () => Promise<void>;
@@ -190,13 +260,39 @@ async function persistCurrentState(): Promise<void> {
   }
 }
 
-export const useGameStore = create<GameStore>((set, get) => ({
+export const useGameStore = create<GameStore>((set, get) => {
+  /** 应用新进度，并把前后 diff 出的解锁项推成可见通知（最多保留 5 条） */
+  const applyProgressWithNotifications = (
+    previous: GameProgressState,
+    next: GameProgressState
+  ) => {
+    const story = get().story;
+    const fresh = story ? diffUnlockNotifications(story, previous, next) : [];
+
+    set((state) => ({
+      ...progressPatch(next),
+      notifications: fresh.length
+        ? [...state.notifications, ...fresh].slice(-5)
+        : state.notifications
+    }));
+  };
+
+  return {
   status: "idle",
   errorMessage: null,
   story: null,
   sessionStarted: false,
   hasSave: false,
+  notifications: [],
   ...createEmptyProgress(),
+
+  dismissNotification: (notificationId) => {
+    set((state) => ({
+      notifications: state.notifications.filter(
+        (item) => item.id !== notificationId
+      )
+    }));
+  },
 
   bootstrap: async () => {
     set({
@@ -305,7 +401,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       events
     );
 
-    set(progressPatch(progress));
+    applyProgressWithNotifications(selectProgress(state), progress);
     await persistCurrentState();
   },
 
@@ -339,7 +435,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       observationId
     );
 
-    set(progressPatch(progress));
+    applyProgressWithNotifications(selectProgress(state), progress);
     await persistCurrentState();
   },
 
@@ -359,7 +455,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     );
 
     if (attempt.state !== currentProgress) {
-      set(progressPatch(attempt.state));
+      applyProgressWithNotifications(currentProgress, attempt.state);
       await persistCurrentState();
     }
 
@@ -382,7 +478,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     );
 
     if (attempt.state !== currentProgress) {
-      set(progressPatch(attempt.state));
+      applyProgressWithNotifications(currentProgress, attempt.state);
       await persistCurrentState();
     }
 
@@ -442,7 +538,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       ? synchronizeChapter(state.story, attempt.state)
       : synchronizeChapterUnlocks(state.story, attempt.state);
 
-    set(progressPatch(progress));
+    applyProgressWithNotifications(selectProgress(state), progress);
     await persistCurrentState();
     return attempt;
   },
@@ -520,7 +616,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       ? synchronizeChapter(state.story, attempt.state)
       : synchronizeChapterUnlocks(state.story, attempt.state);
 
-    set(progressPatch(progress));
+    applyProgressWithNotifications(selectProgress(state), progress);
     await persistCurrentState();
     return attempt;
   },
@@ -555,7 +651,9 @@ export const useGameStore = create<GameStore>((set, get) => ({
     set({
       hasSave: false,
       sessionStarted: false,
+      notifications: [],
       ...createEmptyProgress()
     });
   }
-}));
+  };
+});

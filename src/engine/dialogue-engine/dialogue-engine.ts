@@ -44,10 +44,19 @@ export function presentDialogueEvidence(
   );
 
   if (!response) {
+    // 统计提交的证据中有多少份能单独引起这个话题的反应（不指明是哪几份），
+    // 让失败反馈从"全错"变成"差多少"。
+    const relevantCount = evidenceIds.filter((id) =>
+      dialogue.evidenceResponses.some((candidate) =>
+        candidate.acceptedEvidenceIds.includes(id)
+      )
+    ).length;
+
     return {
       matched: false,
       lines: dialogue.fallbackLines,
       responseId: null,
+      relevantCount,
       state
     };
   }

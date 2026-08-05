@@ -46,7 +46,11 @@
         "text": "这只能说明有人碰过一些东西。你想问我的，究竟是哪一步？"
       }
     ],
-    "completionEvents": []
+    "completionEvents": [],
+    "hints": [
+      "单份证据很难让她正面回应——试着把「接触」和「毒物」一起摆上桌。",
+      "同时出示指纹鉴定和毒检结果。"
+    ]
   },
   {
     "id": "dialogue-yishu-transfer",
@@ -92,7 +96,11 @@
         "text": "别拿无关的东西试探我。那份转移通知就在你手里。"
       }
     ],
-    "completionEvents": []
+    "completionEvents": [],
+    "hints": [
+      "这个话题只围绕一份正式文书，多出示反而稀释了质询的力度。",
+      "只出示那份医疗转移通知。"
+    ]
   },
   {
     "id": "dialogue-yishu-leaving",
@@ -134,7 +142,11 @@
         "text": "你还没有证明我为什么必须留下。"
       }
     ],
-    "completionEvents": []
+    "completionEvents": [],
+    "hints": [
+      "先想清楚：哪份证据能证明她「主动拒绝」了离开的安排？",
+      "出示与她拒绝离开直接相关的那份证据——它来自姐妹间的通讯记录。"
+    ]
   },
   {
     "id": "dialogue-yishu-evidence",
@@ -188,6 +200,10 @@
         "text": "把指纹和毒物放在一起，再告诉我你真正证明了什么。"
       }
     ],
-    "completionEvents": []
+    "completionEvents": [],
+    "hints": [
+      "她刚才的话里已经暗示了方向：单份证据无法构成有效质询。",
+      "把指纹鉴定和毒检结果一起出示。"
+    ]
   }
 ]

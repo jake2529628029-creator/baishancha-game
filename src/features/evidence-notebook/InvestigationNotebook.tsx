@@ -38,6 +38,17 @@ export function InvestigationNotebook({
     unlockedChapterIds,
     collectedEvidenceIds
   );
+  const chapterMaterialIds = unlockedContentIds.filter((id) =>
+    chapter.contentIds.includes(id)
+  );
+  const unviewedCount = chapterMaterialIds.filter(
+    (id) => !viewedContentIds.includes(id)
+  ).length;
+  const tabCounts: Record<NotebookTab, number> = {
+    materials: chapterMaterialIds.length,
+    observations: discoveredObservationIds.length,
+    evidence: evidenceCount.collectedCount
+  };
 
   return (
     <section className="case-panel notebook">
@@ -58,6 +69,10 @@ export function InvestigationNotebook({
             onClick={() => setActiveTab(tab)}
           >
             {tabLabels[tab]}
+            <span className="tab-count">{tabCounts[tab]}</span>
+            {tab === "materials" && unviewedCount > 0 ? (
+              <span className="tab-dot" aria-label={`${unviewedCount} 份未查阅`} />
+            ) : null}
           </button>
         ))}
       </div>
@@ -71,7 +86,12 @@ export function InvestigationNotebook({
               return (
                 <li key={id}>
                   <button type="button" onClick={() => onOpenContent(id)}>
-                    <strong>{content.title}</strong>
+                    <strong>
+                      {!viewedContentIds.includes(id) ? (
+                        <em className="status-tag status-tag--new">新</em>
+                      ) : null}
+                      {content.title}
+                    </strong>
                     <span>
                       {viewedContentIds.includes(id) ? "已查阅" : "待查阅"} ·{" "}
                       {content.source}

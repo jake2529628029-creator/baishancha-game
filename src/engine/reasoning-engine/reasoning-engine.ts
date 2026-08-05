@@ -1,6 +1,6 @@
 import { dispatchChapterEvents } from "../chapter-engine/chapter-engine";
 import type { GameProgressState } from "../../types/progress";
-import type { ReasoningAttempt } from "../../types/reasoning";
+import type { ReasoningAttempt, ReasoningCloseness, ReasoningNode } from "../../types/reasoning";
 import type { LoadedStory } from "../../types/story";
 
 export class ReasoningEngineError extends Error {
@@ -17,6 +17,28 @@ function sameEvidenceSet(left: string[], right: string[]): boolean {
 
   const expected = new Set(left);
   return right.every((id) => expected.has(id));
+}
+
+/**
+ * 计算提交组合与最接近正解的重合度。
+ * 取所有正解中命中数最高的一个——玩家只要"沾边"任意一条可行路线就算有进展。
+ */
+function computeCloseness(
+  node: ReasoningNode,
+  evidenceIds: string[]
+): ReasoningCloseness {
+  let best: ReasoningCloseness = { supporting: 0, required: node.slots.length };
+
+  for (const solution of node.solutions) {
+    const expected = new Set(solution.requiredEvidenceIds);
+    const supporting = evidenceIds.filter((id) => expected.has(id)).length;
+
+    if (supporting > best.supporting) {
+      best = { supporting, required: solution.requiredEvidenceIds.length };
+    }
+  }
+
+  return best;
 }
 
 export function submitReasoning(
@@ -65,6 +87,7 @@ export function submitReasoning(
       matched: false,
       feedback: node.fallbackFeedback,
       solutionId: null,
+      closeness: computeCloseness(node, evidenceIds),
       state: attemptedState
     };
   }
